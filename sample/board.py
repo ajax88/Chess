@@ -3,10 +3,9 @@ class Board(object):
 
 
 	def __init__(self, row, col):
-		self.board = [[' ' for _ in range(row)] for _ in range(col)] 
+		self.board = [[None for _ in range(row)] for _ in range(col)] 
 		self.row = row
 		self.col = col
-
 
 
 #				PUBLIC METHODS 
@@ -19,14 +18,13 @@ class Board(object):
 	def set_square(self, row, col, c):
 		if row >= self.row or row < 0 or col >= self.col or col < 0:
 			raise ValueError('Index out of bounds.')
-		if not c.isalpha() or len(c) > 1:
-			raise ValueError('Board square must be an alphabetical character.')
+
 		self.board[row][col] = c
 
 
  
 #				PRINTING METHODS
-
+'''
 	def print(self):
 		print(self)
 
@@ -44,3 +42,4 @@ class Board(object):
 		for _ in range(self.row):
 			my_str += ' -'
 		return my_str
+'''
