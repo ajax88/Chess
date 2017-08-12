@@ -5,7 +5,8 @@ from abc import ABCMeta, abstractmethod
 import sample.chessboard
 
 
-class ChessPiece(metaclass=ABCMeta):
+class ChessPiece():
+	metaclass = ABCMeta
 	def __init__(self, board, color, row, col):
 		if type(board) != sample.chessboard.ChessBoard:
 			raise TypeError("Must input valid chessboard.")
