@@ -9,17 +9,18 @@
 
 #### In Progress:
 * Chess pieces and their logic
-** Pawn
 
-** Knight 
+	* Pawn
 
-** Bishop
+	* Knight 
 
-** Rook
+	* Bishop
 
-** Queen
+	* Rook
 
-** King
+	* Queen
+
+	* King
 
 #### To Do:
 * Player, Chessplayer, Game, and Chess Game classes
