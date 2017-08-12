@@ -45,7 +45,8 @@ class ChessBoard(Board):
 				self.set_square(7, i, King(self, colors[0 + self.flipboard], 7, i))
 				self.set_square(0, i, King(self, colors[1 - self.flipboard], 0, i))
 
-
+	def is_flipped(self):
+		return self.is_flipped
 
 	def __str__(self):
 		my_str = ''
