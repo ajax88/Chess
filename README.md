@@ -1,6 +1,6 @@
 ## CHESS 
 
-### August 9th 2017
+### August 12th 2017
 ### Alex Jackson & Katie Hoskins
 
 #### Implemented:
