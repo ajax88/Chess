@@ -141,7 +141,12 @@ class ChessBoard(Board):
 		if start_row == end_row and start_col == end_col:
 			raise ValueError("is_blocked must take unique positions.")
 
-		piece_is_white = board.get_square(start_row, start_col).is_white()
+
+		piece = self.get_square(start_row, start_col)
+		if piece is None:
+			raise ValueError("Starting position in is_blocked must have piece.")
+		piece_is_white = piece.is_white()
+
 
 		#Case 1: Diagonal move
 		if abs(end_row - start_row) == abs(end_col - start_col):
@@ -164,29 +169,59 @@ class ChessBoard(Board):
 			next_col = next_col + -1 * c_dir
 			
 			while next_row != end_row and next_col != end_col:
-				curr_spot = board.get_square(next_row, next_col)
+				curr_spot = self.get_square(next_row, next_col)
 				
 				# If there is a piece sitting at the current spot, move is not possible
-				if curr_spot is not None
+				if curr_spot is not None:
 					return True
 				next_row = next_row + -1 * r_dir
-				next_col = next_col + -1 * c_dir]
-
-			#check the last square for a piece of the opposing color or None
-			curr_spot = board.get_square(end_row, end_col)
-			if curr_spot is None or curr_spot.is_white() != piece_is_white:
-				return False
-
-			else:
-				return True
+				next_col = next_col + -1 * c_dir
 
 		#Case 2: Horizontal move
+		elif start_row == end_row:
+			c_dir = 1
+			next_col = start_col
+			if start_col - end_col > 0:
+				c_dir = -1
+
+			next_col += c_dir
+
+			while next_col != end_col:
+				curr_spot = self.get_square(start_row, next_col)
+				if curr_spot is not None:
+					return True
+				next_col += c_dir
+
 
 		#Case 3: Vertical move
+		elif start_col == end_col:
+			r_dir = 1
+			next_row = start_row
+			if start_row - end_row > 0:
+				r_dir = -1
 
-		    
+			next_row += r_dir
+
+			while next_row != end_row:
+				curr_spot = self.get_square(next_row, start_col)
+				if curr_spot is not None:
+					print("Pawn is at...")
+					pos = curr_spot.get_position()
+					print(pos)
+					return True
+				next_row += r_dir
+
 		else:
 			raise ValueError("is_blocked must take straight path.")
+
+
+	#check the last square for a piece of the opposing color or None
+		curr_spot = self.get_square(end_row, end_col)
+		if curr_spot is None or curr_spot.is_white() != piece_is_white:
+			return False
+
+		else:
+			return True
 
 
 	 

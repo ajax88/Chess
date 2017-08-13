@@ -1,5 +1,7 @@
 from context import sample
 from sample.chessboard import ChessBoard
+from sample.rook import Rook
+from sample.bishop import Bishop
 import unittest
 
 class TestChessBoardMethods(unittest.TestCase):
@@ -39,6 +41,46 @@ class TestChessBoardMethods(unittest.TestCase):
 			p1.move(p1_row -1 , p1_col + 1)
 
 		print(board)
+
+	def test_is_blocked(self):
+		print ("Testing is blocked function.")
+
+		board = ChessBoard()
+		rook = Rook(board, "white", 5, 2)
+		board.set_square(5, 2, rook)
+
+		# Test horiz. non-blocked
+		# Rook 5,2 --> 5,6
+		self.assertEqual(board.is_blocked(5, 2, 5, 6), False)
+		# Rook 5,2 --> 5,0
+		self.assertEqual(board.is_blocked(5, 2, 5, 0), False)
+
+		#Test vert. non blocked
+		print(board)
+		self.assertEqual(board.is_blocked(5, 2, 2, 2), False)
+		rook.set_position(2, 3)
+		board.set_square(2, 3, rook)
+		self.assertEqual(board.is_blocked(2, 3, 5, 3), False)
+
+		#Test diagonal directions non blocked
+		bishop = Bishop(board, "white", 4, 4)
+		board.set_square(4, 4, bishop)
+		self.assertEqual(board.is_blocked(4, 4, 2, 2), False)
+		self.assertEqual(board.is_blocked(4, 4, 2, 6), False)
+		self.assertEqual(board.is_blocked(4, 4, 5, 3), False)
+		self.assertEqual(board.is_blocked(4, 4, 5, 5), False)
+
+		#Test above with blocked
+
+		#Test error cases:
+		# No piece exists at start position
+		with (self.assertRaises(ValueError)):
+			board.is_blocked(3, 3, 4, 4)
+		# Non straight path given
+		with (self.assertRaises(ValueError)):
+			board.is_blocked(3, 1, 4, 4)
+
+		print("Success")
 
 
 
