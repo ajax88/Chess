@@ -19,7 +19,6 @@ class ChessPiece():
 		self.taken = False
 		self.set_position(row, col)
 
-
 	def get_name(self):
 		return self.name
 

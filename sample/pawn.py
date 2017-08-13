@@ -14,8 +14,8 @@ class Pawn(ChessPiece):
 	def move(self, to_row, to_col): 
 		if to_row >= 8 or to_row < 0 or to_col >= 8 or to_col < 0:
 			raise ValueError("Move position is out of bounds.")
-			
-		# horizontal moves
+
+		# diagonal moves
 		if to_col != self.col:
 			if abs(to_col-self.col) != 1:
 				raise ValueError("Invalid pawn move.")
@@ -28,12 +28,13 @@ class Pawn(ChessPiece):
 						if to_square.is_white() == self.is_white():
 							raise ValueError("Invalid pawn move.")
 						else:
+							self.board.is_blocked(1,1,1,1)
 							return True
 				else:
 					raise ValueError("Invalid pawn move.")
 
 
-
+'''
 
 		# two squares forward
 		if to_col == self.col - 2 and not self.has_moved and 
@@ -42,7 +43,7 @@ class Pawn(ChessPiece):
 		if to_col == self
 
 
-		'''
+		
 		# Same position
 		if to_row == self.row and to_col == self.col:
 			return False
