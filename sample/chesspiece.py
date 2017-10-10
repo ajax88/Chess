@@ -6,53 +6,53 @@ import sample.chessboard
 
 
 class ChessPiece():
-	metaclass = ABCMeta
-	def __init__(self, board, color, row, col):
-		if type(board) != sample.chessboard.ChessBoard:
-			raise TypeError("Must input valid chessboard.")
+    metaclass = ABCMeta
+    def __init__(self, board, color, row, col):
+        if type(board) != sample.chessboard.ChessBoard:
+            raise TypeError("Must input valid chessboard.")
 
-		if (color.lower() != "white") and (color.lower() != "black"):
-			raise ValueError("Color must be black or white.")
+        if (color.lower() != "white") and (color.lower() != "black"):
+            raise ValueError("Color must be black or white.")
 
-		self.board = board
-		self.color = color.lower()
-		self.taken = False
-		self.set_position(row, col)
+        self.board = board
+        self.color = color.lower()
+        self.taken = False
+        self.set_position(row, col)
 
-	def get_name(self):
-		return self.name
+    def get_name(self):
+        return self.name
 
-	def set_position(self, row, col):
-		if row >= 8 or row < 0 or col >= 8 or col < 0:
-			raise ValueError('Index out of bounds')
-		self.row = row
-		self.col = col
+    def set_position(self, row, col):
+        if row >= 8 or row < 0 or col >= 8 or col < 0:
+            raise ValueError('Index out of bounds')
+        self.row = row
+        self.col = col
 
-	def get_position(self):
-		return (self.row, self.col)
+    def get_position(self):
+        return (self.row, self.col)
 
-	def got_taken(self):
-		self.taken = True
+    def got_taken(self):
+        self.taken = True
 
-	def is_taken(self):
-		return self.taken
+    def is_taken(self):
+        return self.taken
 
-	def is_white(self):
-		return self.color == 'white'
+    def is_white(self):
+        return self.color == 'white'
 
-	def is_black(self):
-		return not self.is_white()
+    def is_black(self):
+        return not self.is_white()
 
-	# Input: a new position for the piece to move to (row, col)
-	# 
-	# This method will update the board and change the piece's position
-	# upon a valid move
-	# 
-	# Returns: 
-	# 		False for all improper input (invalid move)
-	# 		True for a valid move
-	@abstractmethod
-	def move(self, to_row, to_col, board):
-		pass
+    # Input: a new position for the piece to move to (row, col)
+    # 
+    # This method will update the board and change the piece's position
+    # upon a valid move
+    # 
+    # Returns: 
+    #       False for all improper input (invalid move)
+    #       True for a valid move
+    @abstractmethod
+    def move(self, to_row, to_col, board):
+        pass
 
 
