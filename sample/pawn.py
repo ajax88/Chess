@@ -1,60 +1,44 @@
 from sample.chesspiece import ChessPiece
+import sample.constants
 
 class Pawn(ChessPiece):
     def __init__(self, board, color, row, col):
-        super().__init__(board, color, row, col)
-        self.name = 'p'
+        super().__init__(board, color, row, col, sample.constants.PAWN)
         self.has_moved = False
-        if (self.is_white() and not self.board.is_flipped()) or \
-            (self.is_black() and self.board.is_flipped()):
-            self.going_up = True
-        else:
-            self.going_up = False
+        self. going_up = True if (self.is_white() and not self.board.is_flipped()) or \
+            (self.is_black() and self.board.is_flipped()) else False
 
     def move(self, to_row, to_col): 
         if to_row >= 8 or to_row < 0 or to_col >= 8 or to_col < 0:
-            raise ValueError("Move position is out of bounds.")
+            raise ValueError(sample.constants.MOVE_OUT_OF_BOUNDS)
 
         # diagonal moves
         if to_col != self.col:
             if abs(to_col-self.col) != 1:
-                raise ValueError("Invalid pawn move.")
+                raise ValueError(sample.constants.INVALID_PAWN_MOVE)
             else:
-                if (to_row - self.row) == (1 - (self.going_up * 2)):
+                if (to_row - self.row) == -1 if self.going_up else 1:
                     to_square = self.board.get_square(to_row, to_col)
                     if to_square is None:
-                        raise ValueError("Invalid pawn move.")
+                        raise ValueError(sample.constants.INVALID_PAWN_MOVE)
                     else:
                         if to_square.is_white() == self.is_white():
-                            raise ValueError("Invalid pawn move.")
+                            raise ValueError(sample.constants.INVALID_PAWN_MOVE)
                         else:
-                            self.board.is_blocked(1,1,1,1)
-                            return True
+                            self.change_board(to_row, to_col)
                 else:
-                    raise ValueError("Invalid pawn move.")
+                    raise ValueError(sample.constants.INVALID_PAWN_MOVE)
+        # two spaces forward
+        elif (to_row - self.row) == 2 * (-1 if self.going_up else 1):
+            if self.board.is_blocked(self.row, self.col, to_row, to_col) or self.has_moved:
+                raise ValueError(sample.constants.INVALID_PAWN_MOVE)
+            else:
+                self.change_board(to_row, to_col)
 
+        # once space forward
+        elif (to_row - self.row) == -1 if self.going_up else 1:
+            pass
 
-'''
-
-        # two squares forward
-        if to_col == self.col - 2 and not self.has_moved and 
-            return True
-
-        if to_col == self
-
-
-        
-        # Same position
-        if to_row == self.row and to_col == self.col:
-            return False
-
-        if not self.diag_move(to_row, to_col) or 
-                    not self.hor_move(to_row, to_col):
-            return False
-
-        if
-        '''
-
-
-
+        else:
+            raise ValueError(sample.constants.INVALID_PAWN_MOVE)
 

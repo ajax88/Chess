@@ -1,7 +1,7 @@
-from context import sample
 from sample.chessboard import ChessBoard
 from sample.rook import Rook
 from sample.bishop import Bishop
+import sample.constants
 import unittest
 
 class TestChessBoardMethods(unittest.TestCase):
@@ -38,15 +38,15 @@ class TestChessBoardMethods(unittest.TestCase):
         print(p1.get_name())
 
         with (self.assertRaises(ValueError)):
-            p1.move(p1_row -1 , p1_col + 1)
+            p1.move(p1_row - 1, p1_col + 1)
 
         print(board)
 
     def test_is_blocked(self):
-        print ("Testing is blocked function.")
+        print("Testing is blocked function.")
 
         board = ChessBoard()
-        rook = Rook(board, "white", 5, 2)
+        rook = Rook(board, sample.constants.WHITE, 5, 2, sample.constants.ROOK)
         board.set_square(5, 2, rook)
 
         # Test horiz. non-blocked

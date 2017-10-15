@@ -1,5 +1,4 @@
 from sample.board import Board
-from sample.chesspiece import ChessPiece
 from sample.pawn import Pawn
 from sample.rook import Rook
 from sample.knight import Knight
@@ -141,12 +140,10 @@ class ChessBoard(Board):
         if start_row == end_row and start_col == end_col:
             raise ValueError("is_blocked must take unique positions.")
 
-
         piece = self.get_square(start_row, start_col)
         if piece is None:
             raise ValueError("Starting position in is_blocked must have piece.")
         piece_is_white = piece.is_white()
-
 
         #Case 1: Diagonal move
         if abs(end_row - start_row) == abs(end_col - start_col):
@@ -155,15 +152,8 @@ class ChessBoard(Board):
 
             # Determine if column and row values should increase or decrease to get
             # diagonal direction
-            if (start_row - end_row) > 0:
-                r_dir = 1
-            else:
-                r_dir = -1
-
-            if (start_col - end_col) > 0:
-                c_dir = 1
-            else:
-                c_dir = -1
+            r_dir = 1 if (start_row - end_row) > 0 else -1
+            c_dir = 1 if (start_col - end_col) > 0 else -1
 
             next_row = next_row + -1 * r_dir
             next_col = next_col + -1 * c_dir

@@ -1,19 +1,20 @@
 # Base class for all other chess pieces
 from abc import ABCMeta, abstractmethod
 
-# Abandoning using "from" avoids circular / recursive module inclusion
 import sample.chessboard
-
+import sample.constants
 
 class ChessPiece():
     metaclass = ABCMeta
-    def __init__(self, board, color, row, col):
+
+    def __init__(self, board, color, row, col, name):
         if type(board) != sample.chessboard.ChessBoard:
             raise TypeError("Must input valid chessboard.")
 
-        if (color.lower() != "white") and (color.lower() != "black"):
+        if (color.lower() != sample.constants.WHITE) and (color.lower() != sample.constants.BLACK):
             raise ValueError("Color must be black or white.")
 
+        self.name = name
         self.board = board
         self.color = color.lower()
         self.taken = False
@@ -29,7 +30,7 @@ class ChessPiece():
         self.col = col
 
     def get_position(self):
-        return (self.row, self.col)
+        return self.row, self.col
 
     def got_taken(self):
         self.taken = True
@@ -43,6 +44,17 @@ class ChessPiece():
     def is_black(self):
         return not self.is_white()
 
+    def set_board(self, board):
+        self.board = board
+
+    def get_board(self):
+        return self.board
+
+    def change_board(self, to_row, to_col):
+        self.board.set_square(to_row, to_col, sample.constants.BLANK)
+        self.set_position(to_row, to_col)
+        self.board.set_square(self.row, self.col, self)
+
     # Input: a new position for the piece to move to (row, col)
     # 
     # This method will update the board and change the piece's position
@@ -52,7 +64,7 @@ class ChessPiece():
     #       False for all improper input (invalid move)
     #       True for a valid move
     @abstractmethod
-    def move(self, to_row, to_col, board):
+    def move(self, to_row, to_col):
         pass
 
 

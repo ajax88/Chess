@@ -1,14 +1,12 @@
 class Board(object):
-#               INITIALIZATION METHODS
-
+    #               INITIALIZATION METHODS
 
     def __init__(self, row, col):
-        self.board = [[None for _ in range(row)] for _ in range(col)] 
+        self.board = [[None for _ in range(row)] for _ in range(col)]
         self.row = row
         self.col = col
 
-
-#               PUBLIC METHODS 
+    #               PUBLIC METHODS
 
     def get_square(self, row, col):
         if row >= self.row or row < 0 or col >= self.col or col < 0:
@@ -22,8 +20,7 @@ class Board(object):
         self.board[row][col] = c
 
 
- 
-#               PRINTING METHODS
+# PRINTING METHODS
 '''
     def print(self):
         print(self)
