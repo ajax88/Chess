@@ -6,6 +6,7 @@ from sample.bishop import Bishop
 from sample.queen import Queen
 from sample.king import King
 import sample.constants
+import sample.chesspiece
 
 from termcolor import colored
 
@@ -104,7 +105,7 @@ class ChessBoard(Board):
 
             # side numbers 
             my_str += '\n'
-            my_str += str(self.flip_board * (i + 1) + (1 - self.flipboard) * (8 - i))
+            my_str += str(self.flip_board * (i + 1) + (1 - self.flip_board) * (8 - i))
 
             my_str += '|'
 
@@ -163,7 +164,7 @@ class ChessBoard(Board):
                 curr_spot = self.get_square(next_row, next_col)
 
                 # If there is a piece sitting at the current spot, move is not possible
-                if curr_spot is not None:
+                if isinstance(curr_spot, sample.chesspiece.ChessPiece):
                     return True
                 next_row = next_row + -1 * r_dir
                 next_col = next_col + -1 * c_dir

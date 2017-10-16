@@ -23,7 +23,7 @@ class TestChessBoardMethods(unittest.TestCase):
     def test_flipped(self):
         print("Testing flipped board functionality.")
 
-        board =ChessBoard(flipboard=True)
+        board = ChessBoard(flip_board=True)
         print(board)
         print("Success.")
 
@@ -46,7 +46,7 @@ class TestChessBoardMethods(unittest.TestCase):
         print("Testing is blocked function.")
 
         board = ChessBoard()
-        rook = Rook(board, sample.constants.WHITE, 5, 2, sample.constants.ROOK)
+        rook = Rook(board, sample.constants.WHITE, 5, 2)
         board.set_square(5, 2, rook)
 
         # Test horiz. non-blocked
