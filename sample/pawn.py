@@ -4,7 +4,6 @@ import sample.constants
 class Pawn(ChessPiece):
     def __init__(self, board, color, row, col):
         super().__init__(board, color, row, col, sample.constants.PAWN)
-        self.has_moved = False
         self. going_up = True if (self.is_white() and not self.board.is_flipped()) or \
             (self.is_black() and self.board.is_flipped()) else False
 
@@ -30,15 +29,19 @@ class Pawn(ChessPiece):
                     raise ValueError(sample.constants.INVALID_PAWN_MOVE)
         # two spaces forward
         elif (to_row - self.row) == 2 * (-1 if self.going_up else 1):
-            if self.board.is_blocked(self.row, self.col, to_row, to_col) or self.has_moved:
+            if self.board.is_blocked(self.row, self.col, to_row, to_col) or self.has_moved():
                 raise ValueError(sample.constants.INVALID_PAWN_MOVE)
             else:
                 self.change_board(to_row, to_col)
 
         # once space forward
         elif (to_row - self.row) == -1 if self.going_up else 1:
-            pass
+            if self.board.is_blocked(self.row, self.col, to_row, to_col):
+                raise ValueError(sample.constants.INVALID_PAWN_MOVE)
+            else:
+                self.change_board(to_row, to_col)
 
+#TODO: Add in enpassant logic
         else:
             raise ValueError(sample.constants.INVALID_PAWN_MOVE)
 

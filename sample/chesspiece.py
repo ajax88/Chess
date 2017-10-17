@@ -19,6 +19,7 @@ class ChessPiece():
         self.color = color.lower()
         self.taken = False
         self.set_position(row, col)
+        self.has_moved = False
 
     def get_name(self):
         return self.name
@@ -50,10 +51,17 @@ class ChessPiece():
     def get_board(self):
         return self.board
 
+    def set_has_moved(self):
+        self.has_moved = True
+
+    def has_moved(self):
+        return self.has_moved
+
     def change_board(self, to_row, to_col):
         self.board.set_square(to_row, to_col, sample.constants.BLANK)
         self.set_position(to_row, to_col)
         self.board.set_square(self.row, self.col, self)
+        self.set_has_moved()
 
     # Input: a new position for the piece to move to (row, col)
     # 

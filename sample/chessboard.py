@@ -209,8 +209,4 @@ class ChessBoard(Board):
 
             # check the last square for a piece of the opposing color or None
         curr_spot = self.get_square(end_row, end_col)
-        if curr_spot is None or curr_spot.is_white() != piece_is_white:
-            return False
-
-        else:
-            return True
+        return False if curr_spot is None or curr_spot.is_white() != piece_is_white else True
