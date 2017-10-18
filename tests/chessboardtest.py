@@ -1,8 +1,10 @@
 from sample.chessboard import ChessBoard
 from sample.rook import Rook
 from sample.bishop import Bishop
+from sample.pawn import Pawn
 import sample.constants
 import unittest
+
 
 class TestChessBoardMethods(unittest.TestCase):
     def test_initialization(self):
@@ -42,12 +44,10 @@ class TestChessBoardMethods(unittest.TestCase):
 
         print(board)
 
-    def test_is_blocked(self):
-        print("Testing is blocked function.")
-
+    def test_is_blocked_horz(self):
         board = ChessBoard()
         rook = Rook(board, sample.constants.WHITE, 5, 2)
-        board.set_square(5, 2, rook)
+        board.set_square(rook)
 
         # Test horiz. non-blocked
         # Rook 5,2 --> 5,6
@@ -55,16 +55,25 @@ class TestChessBoardMethods(unittest.TestCase):
         # Rook 5,2 --> 5,0
         self.assertEqual(board.is_blocked(5, 2, 5, 0), False)
 
+    def test_is_blocked_vert(self):
+        board = ChessBoard()
+
+        rook = Rook(board, sample.constants.WHITE, 5, 2)
+        board.set_square(rook)
+
         #Test vert. non blocked
         print(board)
         self.assertEqual(board.is_blocked(5, 2, 2, 2), False)
         rook.set_position(2, 3)
-        board.set_square(2, 3, rook)
+        board.set_square(rook)
         self.assertEqual(board.is_blocked(2, 3, 5, 3), False)
 
+    def test_is_blocked_diag(self):
+        board = ChessBoard()
+
         #Test diagonal directions non blocked
-        bishop = Bishop(board, "white", 4, 4)
-        board.set_square(4, 4, bishop)
+        bishop = Bishop(board, sample.constants.WHITE, 4, 4)
+        board.set_square(bishop)
         self.assertEqual(board.is_blocked(4, 4, 2, 2), False)
         self.assertEqual(board.is_blocked(4, 4, 2, 6), False)
         self.assertEqual(board.is_blocked(4, 4, 5, 3), False)
@@ -72,13 +81,23 @@ class TestChessBoardMethods(unittest.TestCase):
 
         #Test above with blocked
 
+    def test_is_blocked_missing_start_piece(self):
+        board = ChessBoard()
         #Test error cases:
         # No piece exists at start position
         with (self.assertRaises(ValueError)):
             board.is_blocked(3, 3, 4, 4)
+
+    def test_is_blocked_invalid_path(self):
+        board = ChessBoard()
+        bishop = Bishop(board, sample.constants.WHITE, 3, 1)
+        board.set_square(bishop)
         # Non straight path given
         with (self.assertRaises(ValueError)):
             board.is_blocked(3, 1, 4, 4)
+
+        # Test with taking piece
+
 
         print("Success")
 

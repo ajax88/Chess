@@ -20,8 +20,8 @@ class ChessBoard(Board):
         self.black_pieces = []
         for i in range(8):
             # set up pawns
-            self.set_square(6, i, Pawn(self, colors[0 + self.flip_board], 6, i))
-            self.set_square(1, i, Pawn(self, colors[1 - self.flip_board], 1, i))
+            self.set_square(Pawn(self, colors[0 + self.flip_board], 6, i))
+            self.set_square(Pawn(self, colors[1 - self.flip_board], 1, i))
             if not self.flip_board:
                 self.white_pieces.append(self.get_square(6, i))
                 self.black_pieces.append(self.get_square(1, i))
@@ -31,8 +31,8 @@ class ChessBoard(Board):
 
             # set up rooks
             if i == 0 or i == 7:
-                self.set_square(7, i, Rook(self, colors[0 + self.flip_board], 7, i))
-                self.set_square(0, i, Rook(self, colors[1 - self.flip_board], 0, i))
+                self.set_square(Rook(self, colors[0 + self.flip_board], 7, i))
+                self.set_square(Rook(self, colors[1 - self.flip_board], 0, i))
                 if not self.flip_board:
                     self.white_pieces.append(self.get_square(7, i))
                     self.black_pieces.append(self.get_square(0, i))
@@ -42,8 +42,8 @@ class ChessBoard(Board):
 
             # set up knights
             if i == 1 or i == 6:
-                self.set_square(7, i, Knight(self, colors[0 + self.flip_board], 7, i))
-                self.set_square(0, i, Knight(self, colors[1 - self.flip_board], 0, i))
+                self.set_square(Knight(self, colors[0 + self.flip_board], 7, i))
+                self.set_square(Knight(self, colors[1 - self.flip_board], 0, i))
                 if not self.flip_board:
                     self.white_pieces.append(self.get_square(7, i))
                     self.black_pieces.append(self.get_square(0, i))
@@ -53,8 +53,8 @@ class ChessBoard(Board):
 
             # set up bishops 
             if i == 2 or i == 5:
-                self.set_square(7, i, Bishop(self, colors[0 + self.flip_board], 7, i))
-                self.set_square(0, i, Bishop(self, colors[1 - self.flip_board], 0, i))
+                self.set_square(Bishop(self, colors[0 + self.flip_board], 7, i))
+                self.set_square(Bishop(self, colors[1 - self.flip_board], 0, i))
                 if not self.flip_board:
                     self.white_pieces.append(self.get_square(7, i))
                     self.black_pieces.append(self.get_square(0, i))
@@ -64,8 +64,8 @@ class ChessBoard(Board):
 
             # set up queen
             if i == 3:
-                self.set_square(7, i, Queen(self, colors[0 + self.flip_board], 7, i))
-                self.set_square(0, i, Queen(self, colors[1 - self.flip_board], 0, i))
+                self.set_square(Queen(self, colors[0 + self.flip_board], 7, i))
+                self.set_square(Queen(self, colors[1 - self.flip_board], 0, i))
                 if not self.flip_board:
                     self.white_pieces.append(self.get_square(7, i))
                     self.black_pieces.append(self.get_square(0, i))
@@ -75,14 +75,24 @@ class ChessBoard(Board):
 
             # set up king
             if i == 4:
-                self.set_square(7, i, King(self, colors[0 + self.flip_board], 7, i))
-                self.set_square(0, i, King(self, colors[1 - self.flip_board], 0, i))
+                self.set_square(King(self, colors[0 + self.flip_board], 7, i))
+                self.set_square(King(self, colors[1 - self.flip_board], 0, i))
                 if not self.flip_board:
                     self.white_pieces.append(self.get_square(7, i))
                     self.black_pieces.append(self.get_square(0, i))
                 else:
                     self.black_pieces.append(self.get_square(7, i))
                     self.white_pieces.append(self.get_square(0, i))
+
+    def set_square(self, piece):
+        if not isinstance(piece, sample.chesspiece.ChessPiece):
+            if not None:
+                raise ValueError("Chessboard squares must take a piece")
+
+        row, col = piece.get_position()
+        super(ChessBoard, self).set_square(row, col, piece)
+
+
 
     def get_white_pieces(self):
         return self.white_pieces
@@ -113,7 +123,7 @@ class ChessBoard(Board):
                 piece = self.get_square(i, j)
                 piece_color = 'grey'
                 if piece is None:
-                    char_piece = sample.constants.BLANK
+                    char_piece = sample.constants.BLANK_CHAR
                 else:
                     char_piece = piece.get_name()
                     if piece.is_white():

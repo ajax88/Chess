@@ -1,4 +1,5 @@
-BLANK = ' '
+BLANK = None
+BLANK_CHAR = ' '
 PAWN = 'p'
 BISHOP = 'b'
 QUEEN = 'q'
