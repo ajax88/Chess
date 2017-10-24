@@ -1,4 +1,4 @@
-import sample.board
+from sample.board.board import Board
 import unittest
 
 
@@ -6,7 +6,7 @@ class TestBoardMethods(unittest.TestCase):
     def test_set_get_square(self):
         print("Testing initialization of int board.")
 
-        board = sample.board.Board(5, 10)
+        board = Board(5, 10)
         self.assertEqual(board.get_square(1, 2), None)
 
         print("Success.")
@@ -14,7 +14,7 @@ class TestBoardMethods(unittest.TestCase):
     def test_outofbounds_index(self):
         print("Testing exception raise with bad index.")
 
-        board = sample.board.Board(8, 8)
+        board = Board(8, 8)
         with (self.assertRaises(ValueError)):
             board.set_square(8, 8, 's')
 
