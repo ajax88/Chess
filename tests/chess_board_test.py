@@ -1,7 +1,7 @@
 import unittest
 
 import sample.helpers.constants
-from sample.board.chessboard import ChessBoard
+from sample.board.chess_board import ChessBoard
 from sample.chesspiece.bishop import Bishop
 from sample.chesspiece.rook import Rook
 from sample.chesspiece.pawn import Pawn

@@ -4,7 +4,7 @@ from sample.chesspiece.pawn import Pawn
 from sample.chesspiece.queen import Queen
 from termcolor import colored
 
-import sample.chesspiece.abstractchesspiece
+import sample.chesspiece.abstract_chess_piece
 import sample.helpers.constants
 from sample.board.board import Board
 from sample.chesspiece.bishop import Bishop
@@ -85,7 +85,7 @@ class ChessBoard(Board):
                     self.white_pieces.append(self.get_square(0, i))
 
     def set_square(self, piece):
-        if not isinstance(piece, sample.chesspiece.abstractchesspiece.ChessPiece):
+        if not isinstance(piece, sample.chesspiece.abstract_chess_piece.ChessPiece):
             if not None:
                 raise ValueError("Chessboard squares must take a piece")
 
@@ -172,7 +172,7 @@ class ChessBoard(Board):
                 curr_spot = self.get_square(next_row, next_col)
 
                 # If there is a piece sitting at the current spot, move is not possible
-                if isinstance(curr_spot, sample.chesspiece.abstractchesspiece.ChessPiece):
+                if isinstance(curr_spot, sample.chesspiece.abstract_chess_piece.ChessPiece):
                     return True
                 next_row = next_row + -1 * r_dir
                 next_col = next_col + -1 * c_dir
