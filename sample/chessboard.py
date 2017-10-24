@@ -92,8 +92,6 @@ class ChessBoard(Board):
         row, col = piece.get_position()
         super(ChessBoard, self).set_square(row, col, piece)
 
-
-
     def get_white_pieces(self):
         return self.white_pieces
 

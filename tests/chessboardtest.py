@@ -8,41 +8,18 @@ import unittest
 
 class TestChessBoardMethods(unittest.TestCase):
     def test_initialization(self):
-        print("Testing initialization of chessboard.")
-
-        board = ChessBoard()
-        print(board)
-
-        print("Success.")
-
-    def test_improper_input(self):
-        print("Testing proper bad input handling.")
-
-        board = ChessBoard()
-
-        print("Success.")
+        ChessBoard()
 
     def test_flipped(self):
-        print("Testing flipped board functionality.")
-
-        board = ChessBoard(flip_board=True)
-        print(board)
-        print("Success.")
+        ChessBoard(flip_board=True)
 
     def test_move(self):
-        print("Testing move function with pawn.")
-
         board = ChessBoard()
         p1 = board.get_white_pieces()[0]
         p1_row, p1_col = p1.get_position()
 
-        print(str(p1_row) + " " + str(p1_col))
-        print(p1.get_name())
-
         with (self.assertRaises(ValueError)):
             p1.move(p1_row - 1, p1_col + 1)
-
-        print(board)
 
     def test_is_blocked_horz(self):
         board = ChessBoard()
@@ -55,6 +32,8 @@ class TestChessBoardMethods(unittest.TestCase):
         # Rook 5,2 --> 5,0
         self.assertEqual(board.is_blocked(5, 2, 5, 0), False)
 
+        self.assertEqual(board.is_blocked(5, 2, 6, 2), True)
+
     def test_is_blocked_vert(self):
         board = ChessBoard()
 
@@ -62,7 +41,6 @@ class TestChessBoardMethods(unittest.TestCase):
         board.set_square(rook)
 
         #Test vert. non blocked
-        print(board)
         self.assertEqual(board.is_blocked(5, 2, 2, 2), False)
         rook.set_position(2, 3)
         board.set_square(rook)
@@ -79,8 +57,6 @@ class TestChessBoardMethods(unittest.TestCase):
         self.assertEqual(board.is_blocked(4, 4, 5, 3), False)
         self.assertEqual(board.is_blocked(4, 4, 5, 5), False)
 
-        #Test above with blocked
-
     def test_is_blocked_missing_start_piece(self):
         board = ChessBoard()
         #Test error cases:
@@ -96,13 +72,35 @@ class TestChessBoardMethods(unittest.TestCase):
         with (self.assertRaises(ValueError)):
             board.is_blocked(3, 1, 4, 4)
 
-        # Test with taking piece
+    def test_is_blocked_taking_piece(self):
+        board = ChessBoard()
+        p1 = Pawn(board, sample.constants.WHITE, 4, 3)
+        p2 = Pawn(board, sample.constants.BLACK, 3, 4)
+        board.set_square(p1)
+        board.set_square(p2)
+        p3 = Pawn(board, sample.constants.BLACK, 2, 1)
+        board.set_square(p3)
+        p4 = Pawn(board, sample.constants.BLACK, 6, 1)
+        board.set_square(p4)
+        p5 = Pawn(board, sample.constants.BLACK, 6, 5)
+        board.set_square(p5)
+        p6 = Pawn(board, sample.constants.BLACK, 4, 5)
+        board.set_square(p6)
+        p7 = Pawn(board, sample.constants.BLACK, 4, 0)
+        board.set_square(p7)
+        p8 = Pawn(board, sample.constants.BLACK, 1, 3)
+        board.set_square(p8)
+        p9 = Pawn(board, sample.constants.BLACK, 5, 3)
+        board.set_square(p9)
 
-
-        print("Success")
-
-
-
+        self.assertEqual(board.is_blocked(4, 3, 6, 5), False)
+        self.assertEqual(board.is_blocked(4, 3, 2, 1), False)
+        self.assertEqual(board.is_blocked(4, 3, 3, 4), False)
+        self.assertEqual(board.is_blocked(4, 3, 6, 1), False)
+        self.assertEqual(board.is_blocked(4, 3, 4, 5), False)
+        self.assertEqual(board.is_blocked(4, 3, 4, 0), False)
+        self.assertEqual(board.is_blocked(4, 3, 1, 3), False)
+        self.assertEqual(board.is_blocked(4, 3, 5, 3), False)
 
 
 if __name__ == '__main__':
