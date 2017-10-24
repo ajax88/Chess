@@ -1,17 +1,18 @@
 # Base class for all other chess pieces
 from abc import ABCMeta, abstractmethod
 
-import sample.chessboard
-import sample.constants
+import sample.board.chessboard
+import sample.helpers.constants
+
 
 class ChessPiece():
     metaclass = ABCMeta
 
     def __init__(self, board, color, row, col, name):
-        if type(board) != sample.chessboard.ChessBoard:
+        if type(board) != sample.board.chessboard.ChessBoard:
             raise TypeError("Must input valid chessboard.")
 
-        if (color.lower() != sample.constants.WHITE) and (color.lower() != sample.constants.BLACK):
+        if (color.lower() != sample.helpers.constants.WHITE) and (color.lower() != sample.helpers.constants.BLACK):
             raise ValueError("Color must be black or white.")
 
         self.name = name
@@ -58,7 +59,7 @@ class ChessPiece():
         return self.has_moved
 
     def change_board(self, to_row, to_col):
-        self.board.set_square(to_row, to_col, sample.constants.BLANK)
+        self.board.set_square(to_row, to_col, sample.helpers.constants.BLANK)
         self.set_position(to_row, to_col)
         self.board.set_square(self.row, self.col, self)
         self.set_has_moved()

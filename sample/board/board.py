@@ -1,10 +1,10 @@
-import sample.constants
+import sample.helpers.constants
 
 class Board(object):
     #               INITIALIZATION METHODS
 
     def __init__(self, row, col):
-        self.board = [[sample.constants.BLANK for _ in range(row)] for _ in range(col)]
+        self.board = [[sample.helpers.constants.BLANK for _ in range(row)] for _ in range(col)]
         self.row = row
         self.col = col
 

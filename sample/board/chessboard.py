@@ -1,21 +1,21 @@
-from sample.board import Board
-from sample.pawn import Pawn
-from sample.rook import Rook
-from sample.knight import Knight
-from sample.bishop import Bishop
-from sample.queen import Queen
-from sample.king import King
-import sample.constants
-import sample.chesspiece
-
+from sample.chesspiece.king import King
+from sample.chesspiece.knight import Knight
+from sample.chesspiece.pawn import Pawn
+from sample.chesspiece.queen import Queen
 from termcolor import colored
+
+import sample.chesspiece.abstractchesspiece
+import sample.helpers.constants
+from sample.board.board import Board
+from sample.chesspiece.bishop import Bishop
+from sample.chesspiece.rook import Rook
 
 
 class ChessBoard(Board):
     def __init__(self, flip_board=False):
         super().__init__(8, 8)
         self.flip_board = flip_board
-        colors = [sample.constants.WHITE, sample.constants.BLACK]
+        colors = [sample.helpers.constants.WHITE, sample.helpers.constants.BLACK]
         self.white_pieces = []
         self.black_pieces = []
         for i in range(8):
@@ -85,7 +85,7 @@ class ChessBoard(Board):
                     self.white_pieces.append(self.get_square(0, i))
 
     def set_square(self, piece):
-        if not isinstance(piece, sample.chesspiece.ChessPiece):
+        if not isinstance(piece, sample.chesspiece.abstractchesspiece.ChessPiece):
             if not None:
                 raise ValueError("Chessboard squares must take a piece")
 
@@ -121,7 +121,7 @@ class ChessBoard(Board):
                 piece = self.get_square(i, j)
                 piece_color = 'grey'
                 if piece is None:
-                    char_piece = sample.constants.BLANK_CHAR
+                    char_piece = sample.helpers.constants.BLANK_CHAR
                 else:
                     char_piece = piece.get_name()
                     if piece.is_white():
@@ -172,7 +172,7 @@ class ChessBoard(Board):
                 curr_spot = self.get_square(next_row, next_col)
 
                 # If there is a piece sitting at the current spot, move is not possible
-                if isinstance(curr_spot, sample.chesspiece.ChessPiece):
+                if isinstance(curr_spot, sample.chesspiece.abstractchesspiece.ChessPiece):
                     return True
                 next_row = next_row + -1 * r_dir
                 next_col = next_col + -1 * c_dir

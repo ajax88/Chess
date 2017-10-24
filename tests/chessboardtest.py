@@ -1,9 +1,10 @@
-from sample.chessboard import ChessBoard
-from sample.rook import Rook
-from sample.bishop import Bishop
-from sample.pawn import Pawn
-import sample.constants
 import unittest
+
+import sample.helpers.constants
+from sample.board.chessboard import ChessBoard
+from sample.chesspiece.bishop import Bishop
+from sample.chesspiece.rook import Rook
+from sample.chesspiece.pawn import Pawn
 
 
 class TestChessBoardMethods(unittest.TestCase):
@@ -23,7 +24,7 @@ class TestChessBoardMethods(unittest.TestCase):
 
     def test_is_blocked_horz(self):
         board = ChessBoard()
-        rook = Rook(board, sample.constants.WHITE, 5, 2)
+        rook = Rook(board, sample.helpers.constants.WHITE, 5, 2)
         board.set_square(rook)
 
         # Test horiz. non-blocked
@@ -37,7 +38,7 @@ class TestChessBoardMethods(unittest.TestCase):
     def test_is_blocked_vert(self):
         board = ChessBoard()
 
-        rook = Rook(board, sample.constants.WHITE, 5, 2)
+        rook = Rook(board, sample.helpers.constants.WHITE, 5, 2)
         board.set_square(rook)
 
         #Test vert. non blocked
@@ -50,7 +51,7 @@ class TestChessBoardMethods(unittest.TestCase):
         board = ChessBoard()
 
         #Test diagonal directions non blocked
-        bishop = Bishop(board, sample.constants.WHITE, 4, 4)
+        bishop = Bishop(board, sample.helpers.constants.WHITE, 4, 4)
         board.set_square(bishop)
         self.assertEqual(board.is_blocked(4, 4, 2, 2), False)
         self.assertEqual(board.is_blocked(4, 4, 2, 6), False)
@@ -66,7 +67,7 @@ class TestChessBoardMethods(unittest.TestCase):
 
     def test_is_blocked_invalid_path(self):
         board = ChessBoard()
-        bishop = Bishop(board, sample.constants.WHITE, 3, 1)
+        bishop = Bishop(board, sample.helpers.constants.WHITE, 3, 1)
         board.set_square(bishop)
         # Non straight path given
         with (self.assertRaises(ValueError)):
@@ -74,23 +75,23 @@ class TestChessBoardMethods(unittest.TestCase):
 
     def test_is_blocked_taking_piece(self):
         board = ChessBoard()
-        p1 = Pawn(board, sample.constants.WHITE, 4, 3)
-        p2 = Pawn(board, sample.constants.BLACK, 3, 4)
+        p1 = Pawn(board, sample.helpers.constants.WHITE, 4, 3)
+        p2 = Pawn(board, sample.helpers.constants.BLACK, 3, 4)
         board.set_square(p1)
         board.set_square(p2)
-        p3 = Pawn(board, sample.constants.BLACK, 2, 1)
+        p3 = Pawn(board, sample.helpers.constants.BLACK, 2, 1)
         board.set_square(p3)
-        p4 = Pawn(board, sample.constants.BLACK, 6, 1)
+        p4 = Pawn(board, sample.helpers.constants.BLACK, 6, 1)
         board.set_square(p4)
-        p5 = Pawn(board, sample.constants.BLACK, 6, 5)
+        p5 = Pawn(board, sample.helpers.constants.BLACK, 6, 5)
         board.set_square(p5)
-        p6 = Pawn(board, sample.constants.BLACK, 4, 5)
+        p6 = Pawn(board, sample.helpers.constants.BLACK, 4, 5)
         board.set_square(p6)
-        p7 = Pawn(board, sample.constants.BLACK, 4, 0)
+        p7 = Pawn(board, sample.helpers.constants.BLACK, 4, 0)
         board.set_square(p7)
-        p8 = Pawn(board, sample.constants.BLACK, 1, 3)
+        p8 = Pawn(board, sample.helpers.constants.BLACK, 1, 3)
         board.set_square(p8)
-        p9 = Pawn(board, sample.constants.BLACK, 5, 3)
+        p9 = Pawn(board, sample.helpers.constants.BLACK, 5, 3)
         board.set_square(p9)
 
         self.assertEqual(board.is_blocked(4, 3, 6, 5), False)
