@@ -1,5 +1,9 @@
+from sample.game.chess_game import ChessGame
+
+
 def main():
-    print("Entry point.")
+    game = ChessGame()
+    game.print_board()
 
 
 if __name__ == "__main__":

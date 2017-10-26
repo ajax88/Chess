@@ -5,7 +5,7 @@ from sample.chesspiece.abstract_chess_piece import ChessPiece
 class Pawn(ChessPiece):
     def __init__(self, board, color, row, col):
         super().__init__(board, color, row, col, sample.helpers.constants.PAWN)
-        self. going_up = True if (self.is_white() and not self.board.is_flipped()) or \
+        self.going_up = True if (self.is_white() and not self.board.is_flipped()) or \
             (self.is_black() and self.board.is_flipped()) else False
 
     def move(self, to_row, to_col): 
