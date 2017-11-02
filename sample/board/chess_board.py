@@ -188,7 +188,7 @@ class ChessBoard(Board):
 
             while next_col != end_col:
                 curr_spot = self.get_square(start_row, next_col)
-                if curr_spot is not None:
+                if isinstance(curr_spot, sample.chesspiece.abstract_chess_piece.ChessPiece):
                     return True
                 next_col += c_dir
 
@@ -204,10 +204,8 @@ class ChessBoard(Board):
 
             while next_row != end_row:
                 curr_spot = self.get_square(next_row, start_col)
-                if curr_spot is not None:
-                    print("Pawn is at...")
-                    pos = curr_spot.get_position()
-                    print(pos)
+
+                if isinstance(curr_spot, sample.chesspiece.abstract_chess_piece.ChessPiece):
                     return True
                 next_row += r_dir
 
