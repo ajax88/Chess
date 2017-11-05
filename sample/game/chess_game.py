@@ -5,13 +5,14 @@ from sample.helpers import constants
 
 
 class ChessGame(Game):
-    def __init__(self):
-        self.board = ChessBoard()
+    def __init__(self, flip_board):
+        self.board = ChessBoard(flip_board)
         self.player1 = ChessPlayer(constants.BLANK_CHAR, self.board, None)
         self.player2 = ChessPlayer(constants.BLANK_CHAR, self.board, None)
 
     def start(self):
         self.init_players()
+
 
     def print_board(self):
         print(self.board)
@@ -36,3 +37,12 @@ class ChessGame(Game):
 
     def get_player_2(self):
         return self.player2
+
+    def parse_move(self, move, color):
+        move = move.lower()
+        piece_name = move[0]
+
+
+
+
+
