@@ -59,9 +59,9 @@ class ChessPiece():
         return self.has_moved
 
     def change_board(self, to_row, to_col):
-        self.board.set_square(to_row, to_col, sample.helpers.constants.BLANK)
+        self.board.set_square( sample.helpers.constants.BLANK, self.row, self.col)
         self.set_position(to_row, to_col)
-        self.board.set_square(self.row, self.col, self)
+        self.board.set_square(self)
         self.set_has_moved()
 
     # Input: a new position for the piece to move to (row, col)

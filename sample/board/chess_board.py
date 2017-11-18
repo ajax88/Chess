@@ -5,7 +5,7 @@ from sample.chesspiece.queen import Queen
 from termcolor import colored
 
 import sample.chesspiece.abstract_chess_piece
-import sample.helpers.constants
+from sample.helpers import constants
 from sample.board.board import Board
 from sample.chesspiece.bishop import Bishop
 from sample.chesspiece.rook import Rook
@@ -84,12 +84,13 @@ class ChessBoard(Board):
                     self.black_pieces.append(self.get_square(7, i))
                     self.white_pieces.append(self.get_square(0, i))
 
-    def set_square(self, piece):
+    def set_square(self, piece, row = None, col = None):
         if not isinstance(piece, sample.chesspiece.abstract_chess_piece.ChessPiece):
-            if not None:
+            if piece is not None:
                 raise ValueError("Chessboard squares must take a piece")
 
-        row, col = piece.get_position()
+        if piece is not None:
+            row, col = piece.get_position()
         super(ChessBoard, self).set_square(row, col, piece)
 
     def get_white_pieces(self):
@@ -101,14 +102,19 @@ class ChessBoard(Board):
     def is_flipped(self):
         return self.flip_board
 
-    #def makeMove(pieceType, color, destination)
-        #get the black or white list depending on the color
-        #for each piece in the list:
-            #if piece = pieceType
-                #call the piece's move function - returns T or F
-                    #if true -> return true 
-                    #if false -> keep lookin' for the piece
-        #if no pieces moved, return false :(
+    def makeMove(self, pieceType, color, destinationRow, destinationCol):
+        if color == constants.WHITE:
+            pieces = self.white_pieces
+        else:
+            pieces = self.black_pieces
+
+        for piece in pieces:
+            if piece.get_name() == pieceType:
+                success = piece.move(destinationRow, destinationCol)
+                if success:
+                    return True
+
+        return False
 
     def __str__(self):
         my_str = ''

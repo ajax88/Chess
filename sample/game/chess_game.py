@@ -51,9 +51,13 @@ class ChessGame(Game):
     def get_player_2(self):
         return self.player2
 
-    def parse_move(self, move, color):
+    def parse_move(self, move):
         move = move.lower()
         piece_name = move[0]
+        if self.current_player.get_color() == constants.WHITE:
+            return ("p", constants.WHITE , 4, 0)
+        else:
+            return("p", constants.BLACK, 2, 4)
 
     def play_game(self):
         game_over = False
@@ -61,17 +65,24 @@ class ChessGame(Game):
             os.system('clear')
             print(self.board)
             print(self.current_player.get_name() + ", it's your turn. ")
+
+            moveSuccess = False
             move_string = input("Move: ")
-            if (move_string == "quit") :
-                game_over = True
-            #example -> Nd6
-            #parse move (String move) returns (pieceType, targetSpot, color)
-            #pass that info to board as makeMove(pieceType, targetSpot, color)
-                    #makeMove returns True if move was AOK, continue
-                    #makeMove returns False if move was invalid, ask for another move and 
-                    #repeat
-            #once makeMove returns true:
+            while(not moveSuccess):
+                if (move_string == "quit") :
+                    game_over = True
+                    break
+                (pieceType, color, row, col) = self.parse_move(move_string);
+                moveSuccess = self.board.makeMove(pieceType, color, row, col)
+                if not moveSuccess:
+                    move_string = input("Invalid move. Please enter a new, valid move: ")
+                    continue
+                else:
+                    break
+
             self.change_current_player()
+            input("PAUSED for debugging. Press any key to continue.")
+
 
 
 
