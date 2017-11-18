@@ -101,6 +101,15 @@ class ChessBoard(Board):
     def is_flipped(self):
         return self.flip_board
 
+    #def makeMove(pieceType, color, destination)
+        #get the black or white list depending on the color
+        #for each piece in the list:
+            #if piece = pieceType
+                #call the piece's move function - returns T or F
+                    #if true -> return true 
+                    #if false -> keep lookin' for the piece
+        #if no pieces moved, return false :(
+
     def __str__(self):
         my_str = ''
 

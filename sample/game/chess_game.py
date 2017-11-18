@@ -64,6 +64,13 @@ class ChessGame(Game):
             move_string = input("Move: ")
             if (move_string == "quit") :
                 game_over = True
+            #example -> Nd6
+            #parse move (String move) returns (pieceType, targetSpot, color)
+            #pass that info to board as makeMove(pieceType, targetSpot, color)
+                    #makeMove returns True if move was AOK, continue
+                    #makeMove returns False if move was invalid, ask for another move and 
+                    #repeat
+            #once makeMove returns true:
             self.change_current_player()
 
 

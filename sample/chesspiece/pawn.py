@@ -9,6 +9,7 @@ class Pawn(ChessPiece):
             (self.is_black() and self.board.is_flipped()) else False
 
     def move(self, to_row, to_col): 
+        #maybe move to parse move?
         if to_row >= 8 or to_row < 0 or to_col >= 8 or to_col < 0:
             raise ValueError(sample.helpers.constants.MOVE_OUT_OF_BOUNDS)
 

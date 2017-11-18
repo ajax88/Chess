@@ -8,3 +8,4 @@ class Knight(ChessPiece):
 
     def move(self, to_row, to_col):
         pass
+        #
