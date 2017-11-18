@@ -51,13 +51,27 @@ class ChessGame(Game):
     def get_player_2(self):
         return self.player2
 
+#   TODO// handle switched board
     def parse_move(self, move):
         move = move.lower()
-        piece_name = move[0]
-        if self.current_player.get_color() == constants.WHITE:
-            return ("p", constants.WHITE , 4, 0)
+
+        if len(move) == 2:
+            return 'p', self.current_player.get_color(), constants.BOARD_CHARS.index(move[0]), \
+                   constants.BOARD_NUMS_REVERSE.index(move[1])
+        elif len(move) == 3:
+            return move[0], self.current_player.get_color(), constants.BOARD_CHARS.index(move[1]), \
+                   constants.BOARD_NUMS_REVERSE.index(move[2])
+        elif len(move) == 4:
+            pass # specific pawn move
+        elif len(move) == 6:
+            pass #specific move:
         else:
-            return("p", constants.BLACK, 2, 4)
+            raise ValueError("Invalid move input.")
+
+    def convert_to_row_col(self, letter_number):
+        letter = letter_number[0]
+        number = letter_number[1]
+        return constants.BOARD_CHARS.index(letter), constants.BOARD_NUMS.index(number)
 
     def play_game(self):
         game_over = False

@@ -13,7 +13,8 @@ MOVE_OUT_OF_BOUNDS = "Move position is out of bounds."
 INVALID_INPUT_COLOR = "Color must be either black or white"
 PIECE_CHARS = ['n', 'b', 'r', 'k', 'q', 'p']
 BOARD_CHARS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-BOARD_NUMS = ['1', '2', '3', '4', '5', '6', '7', '8']
+BOARD_NUMS = [i for i in range(1, 9)]
+BOARD_NUMS_REVERSE = [i for i in range(9, 1, -1)]
 
 
 def get_other_color(color):
