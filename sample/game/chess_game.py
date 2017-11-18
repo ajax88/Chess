@@ -56,11 +56,11 @@ class ChessGame(Game):
         move = move.lower()
 
         if len(move) == 2:
-            return 'p', self.current_player.get_color(), constants.BOARD_CHARS.index(move[0]), \
-                   constants.BOARD_NUMS_REVERSE.index(move[1])
+            return 'p', self.current_player.get_color(), constants.BOARD_NUMS_REVERSE.index(int(move[1])), \
+                   constants.BOARD_CHARS.index(move[0]),
         elif len(move) == 3:
-            return move[0], self.current_player.get_color(), constants.BOARD_CHARS.index(move[1]), \
-                   constants.BOARD_NUMS_REVERSE.index(move[2])
+            return move[0], self.current_player.get_color(), constants.BOARD_NUMS_REVERSE.index(int(move[2])), \
+                   constants.BOARD_CHARS.index(move[1])
         elif len(move) == 4:
             pass # specific pawn move
         elif len(move) == 6:

@@ -16,7 +16,7 @@ class Pawn(ChessPiece):
             if abs(to_col-self.col) != 1:
                 return False
             else:
-                if (to_row - self.row) == -1 if self.going_up else 1:
+                if (to_row - self.row) == (-1 if self.going_up else 1):
                     to_square = self.board.get_square(to_row, to_col)
                     if to_square is None:
                         return False
