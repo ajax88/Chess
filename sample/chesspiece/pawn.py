@@ -33,6 +33,9 @@ class Pawn(ChessPiece):
             if self.board.is_blocked(self.row, self.col, to_row, to_col) or self.has_moved:
                 return False
             else:
+                poss_piece = self.board.get_square(to_row, to_col)
+                if poss_piece is not None:
+                    return False
                 self.change_board(to_row, to_col)
                 return True
 
@@ -41,6 +44,9 @@ class Pawn(ChessPiece):
             if self.board.is_blocked(self.row, self.col, to_row, to_col):
                 return False
             else:
+                poss_piece = self.board.get_square(to_row, to_col)
+                if poss_piece is not None:
+                    return False
                 self.change_board(to_row, to_col)
                 return True
 

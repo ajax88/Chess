@@ -86,7 +86,11 @@ class ChessGame(Game):
                 if (move_string == "quit") :
                     game_over = True
                     break
-                (pieceType, color, row, col) = self.parse_move(move_string);
+                try:
+                    (pieceType, color, row, col) = self.parse_move(move_string);
+                except ValueError:
+                    move_string = input("Bad move dude. Baaaaaaad move. Try again: ")
+                    continue
                 moveSuccess = self.board.makeMove(pieceType, color, row, col)
                 if not moveSuccess:
                     move_string = input("Invalid move. Please enter a new, valid move: ")
