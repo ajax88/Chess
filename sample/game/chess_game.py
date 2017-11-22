@@ -8,9 +8,14 @@ import os
 
 class ChessGame(Game):
     def __init__(self, flip_board):
-        self.board = ChessBoard(flip_board)
+        self.flip_board = flip_board
+        self.board = ChessBoard(self.flip_board)
         self.player1 = ChessPlayer(constants.BLANK_CHAR, self.board, None)
         self.player2 = ChessPlayer(constants.BLANK_CHAR, self.board, None)
+        if self.flip_board:
+            constants.BOARD_CHARS.reverse()
+        else:
+            constants.BOARD_NUMS.reverse()
 
     def start(self):
         self.init_players()
@@ -20,9 +25,9 @@ class ChessGame(Game):
         print(self.board)
 
     def change_current_player (self) :
-        if self.current_player == self.player1 :
+        if self.current_player == self.player1:
             self.current_player = self.player2
-        else :
+        else:
             self.current_player = self.player1
 
 
@@ -56,11 +61,12 @@ class ChessGame(Game):
         move = move.lower()
 
         if len(move) == 2:
-            return 'p', self.current_player.get_color(), constants.BOARD_NUMS_REVERSE.index(int(move[1])), \
-                   constants.BOARD_CHARS.index(move[0]),
+            row, col = self.convert_to_row_col(move)
+            print(row, col)
+            return 'p', self.current_player.get_color(), row, col
         elif len(move) == 3:
-            return move[0], self.current_player.get_color(), constants.BOARD_NUMS_REVERSE.index(int(move[2])), \
-                   constants.BOARD_CHARS.index(move[1])
+            row, col = self.convert_to_row_col(move[1:])
+            return move[0], self.current_player.get_color(), row, col
         elif len(move) == 4:
             pass # specific pawn move
         elif len(move) == 6:
@@ -71,7 +77,7 @@ class ChessGame(Game):
     def convert_to_row_col(self, letter_number):
         letter = letter_number[0]
         number = letter_number[1]
-        return constants.BOARD_CHARS.index(letter), constants.BOARD_NUMS.index(number)
+        return constants.BOARD_NUMS.index(int(number)), constants.BOARD_CHARS.index(letter)
 
     def play_game(self):
         game_over = False
@@ -87,7 +93,7 @@ class ChessGame(Game):
                     game_over = True
                     break
                 try:
-                    (pieceType, color, row, col) = self.parse_move(move_string);
+                    (pieceType, color, row, col) = self.parse_move(move_string)
                 except ValueError:
                     move_string = input("Bad move dude. Baaaaaaad move. Try again: ")
                     continue

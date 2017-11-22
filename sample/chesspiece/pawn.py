@@ -18,14 +18,11 @@ class Pawn(ChessPiece):
             else:
                 if (to_row - self.row) == (-1 if self.going_up else 1):
                     to_square = self.board.get_square(to_row, to_col)
-                    if to_square is None:
+                    if to_square is None or to_square.is_white() == self.is_white():
                         return False
                     else:
-                        if to_square.is_white() == self.is_white():
-                            return False
-                        else:
-                            self.change_board(to_row, to_col)
-                            return True
+                        self.change_board(to_row, to_col)
+                        return True
                 else:
                     return False
         # two spaces forward
@@ -33,8 +30,7 @@ class Pawn(ChessPiece):
             if self.board.is_blocked(self.row, self.col, to_row, to_col) or self.has_moved:
                 return False
             else:
-                poss_piece = self.board.get_square(to_row, to_col)
-                if poss_piece is not None:
+                if self.board.get_square(to_row, to_col) is not None:
                     return False
                 self.change_board(to_row, to_col)
                 return True
@@ -44,8 +40,7 @@ class Pawn(ChessPiece):
             if self.board.is_blocked(self.row, self.col, to_row, to_col):
                 return False
             else:
-                poss_piece = self.board.get_square(to_row, to_col)
-                if poss_piece is not None:
+                if self.board.get_square(to_row, to_col) is not None:
                     return False
                 self.change_board(to_row, to_col)
                 return True

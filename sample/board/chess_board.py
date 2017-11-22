@@ -157,7 +157,7 @@ class ChessBoard(Board):
         if not self.flip_board:
             my_str += '\n  a b c d e f g h'
         else:
-            my_str += '\n h f g e d c b a'
+            my_str += '\n  h f g e d c b a'
         return my_str
 
     def is_blocked(self, start_row, start_col, end_row, end_col):
