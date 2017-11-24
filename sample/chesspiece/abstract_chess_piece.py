@@ -76,4 +76,8 @@ class ChessPiece():
     def move(self, to_row, to_col):
         pass
 
+    @abstractmethod
+    def can_move(self, to_row, to_col):
+        pass
+
 

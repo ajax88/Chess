@@ -8,9 +8,13 @@ class Pawn(ChessPiece):
         self.going_up = True if (self.is_white() and not self.board.is_flipped()) or \
             (self.is_black() and self.board.is_flipped()) else False
 
-    def move(self, to_row, to_col): 
-        print("attempting to move a pawn from (" + str(self.row) + "," + str(self.col) + ") to (" + str(to_row) + "," + str(to_col) + ").")
+    def move(self, to_row, to_col):
+        if self.can_move(to_row, to_col):
+            self.change_board(to_row, to_col)
+            return True
+        return False
 
+    def can_move(self, to_row, to_col):
         # diagonal moves
         if to_col != self.col:
             if abs(to_col-self.col) != 1:
@@ -21,7 +25,6 @@ class Pawn(ChessPiece):
                     if to_square is None or to_square.is_white() == self.is_white():
                         return False
                     else:
-                        self.change_board(to_row, to_col)
                         return True
                 else:
                     return False
@@ -32,7 +35,6 @@ class Pawn(ChessPiece):
             else:
                 if self.board.get_square(to_row, to_col) is not None:
                     return False
-                self.change_board(to_row, to_col)
                 return True
 
         # once space forward
@@ -42,10 +44,7 @@ class Pawn(ChessPiece):
             else:
                 if self.board.get_square(to_row, to_col) is not None:
                     return False
-                self.change_board(to_row, to_col)
                 return True
-
-#TODO: Add in enpassant logic
         else:
             return False
-
+#TODO: Add in enpassant logic

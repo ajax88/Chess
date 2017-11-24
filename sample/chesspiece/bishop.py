@@ -7,11 +7,13 @@ class Bishop(ChessPiece):
         super().__init__(board, color, row, col, sample.helpers.constants.BISHOP)
 
     def move(self, to_row, to_col):
+        if self.can_move(to_row, to_col):
+            self.change_board(to_row, to_col)
+            return True
+        return False
+
+    def can_move(self, to_row, to_col):
         if abs(to_row - self.row) == abs(to_col - self.col):
-            if self.board.is_blocked(self.row, self.col, to_row, to_col):
-                return False
-            else:
-                self.change_board(to_row, to_col)
+            if not self.board.is_blocked(self.row, self.col, to_row, to_col):
                 return True
-        else:
-            return False
+        return False
