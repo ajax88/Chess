@@ -8,3 +8,6 @@ class Queen(ChessPiece):
 
     def move(self, to_row, to_col):
         pass
+
+    def can_move(self, to_row, to_col):
+        pass
