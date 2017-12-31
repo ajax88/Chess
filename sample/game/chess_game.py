@@ -88,8 +88,8 @@ class ChessGame(Game):
 
             moveSuccess = False
             move_string = input("Move: ")
-            while(not moveSuccess):
-                if (move_string == "quit") :
+            while not moveSuccess:
+                if move_string == "quit":
                     game_over = True
                     break
                 try:
@@ -105,7 +105,6 @@ class ChessGame(Game):
                     break
 
             self.change_current_player()
-            input("PAUSED for debugging. Press any key to continue.")
 
 
 
