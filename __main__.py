@@ -1,5 +1,9 @@
 from sample.game.chess_game import ChessGame
 import os
+import tkinter as tk
+from tkinter import *
+from tkinter import ttk
+from sample.ui.welcome_page import WelcomePage
 
 
 def main():
@@ -15,7 +19,11 @@ def main():
             break
 
     game = ChessGame(flip_board)
-    game.start()
+    game_window = WelcomePage()
+    game_window.buildWelcomePage(game)
+
+    #Removing ability to set names via terminal window - use UI
+    #game.start()
 
 def print_title():
     print("  /$$$$$$  /$$                                   ")
