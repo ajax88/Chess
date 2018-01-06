@@ -60,6 +60,10 @@ class ChessPiece():
 
     def change_board(self, to_row, to_col):
         self.board.set_square(sample.helpers.constants.BLANK, self.row, self.col)
+        piece = self.board.get_square(to_row, to_col)
+        if piece is not None:
+            self.board.get_black_pieces().remove(piece) if self.is_white() else self.board.get_white_pieces().remove(piece)
+            
         self.set_position(to_row, to_col)
         self.board.set_square(self)
         self.set_has_moved()
