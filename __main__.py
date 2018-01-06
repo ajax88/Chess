@@ -15,6 +15,10 @@ def main():
             break
 
     game = ChessGame(flip_board)
+    # game_window = WelcomePage()
+    # game_window.buildWelcomePage(game)
+
+    #Removing ability to set names via terminal window - use UI
     game.start()
 
 def print_title():
