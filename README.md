@@ -6,21 +6,15 @@
 #### Implemented:
 * Board + Chessboard
 * Project skeleton
+* Piece logic
+* Check logic
+* Game start + move parsing
 
 #### In Progress:
-* Chess pieces and their logic
-
-	* Pawn
-
-	* Knight 
-
-	* Bishop
-
-	* Rook
-
-	* Queen
-
-	* King
 
 #### To Do:
-* Player, Chessplayer, Game, and Chess Game classes
+* Checkmate
+* Stalement
+* Castle (both sides)
+* two pieces move to one square?
+* enpassant 

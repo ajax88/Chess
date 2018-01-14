@@ -59,7 +59,11 @@ class ChessPiece():
         return self.has_moved
 
     def change_board(self, to_row, to_col):
-        self.board.set_square( sample.helpers.constants.BLANK, self.row, self.col)
+        self.board.set_square(sample.helpers.constants.BLANK, self.row, self.col)
+        piece = self.board.get_square(to_row, to_col)
+        if piece is not None:
+            self.board.get_black_pieces().remove(piece) if self.is_white() else self.board.get_white_pieces().remove(piece)
+            
         self.set_position(to_row, to_col)
         self.board.set_square(self)
         self.set_has_moved()
@@ -80,4 +84,10 @@ class ChessPiece():
     def can_move(self, to_row, to_col):
         pass
 
+    def move_will_cause_check(self):
+        board = self.get_board()
+        board.set_square(None, self.row, self.col)
+        in_check = board.in_check(self.color)
+        board.set_square(self)
+        return in_check
 
