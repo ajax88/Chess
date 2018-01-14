@@ -8,6 +8,8 @@ class Queen(ChessPiece):
 
     def move(self, to_row, to_col):
         if self.can_move(to_row, to_col):
+            if self.move_will_cause_check():
+                raise ValueError(sample.helpers.constants.MOVE_KING_IN_CHECK)
             self.change_board(to_row, to_col)
             return True
         return False

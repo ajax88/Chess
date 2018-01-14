@@ -84,4 +84,10 @@ class ChessPiece():
     def can_move(self, to_row, to_col):
         pass
 
+    def move_will_cause_check(self):
+        board = self.get_board()
+        board.set_square(None, self.row, self.col)
+        in_check = board.in_check(self.color)
+        board.set_square(self)
+        return in_check
 

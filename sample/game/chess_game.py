@@ -121,11 +121,15 @@ class ChessGame(Game):
                 except ValueError:
                     move_string = input("Bad move dude. Baaaaaaad move. Try again: ")
                     continue
-                moveSuccess = self.board.makeMove(pieceType, color, row, col)
-                if not moveSuccess:
-                    move_string = input("Invalid move. Please enter a new, valid move: ")
+                try:
+                    moveSuccess = self.board.makeMove(pieceType, color, row, col)
+                    if not moveSuccess:
+                        move_string = input("Invalid move. Please enter a new, valid move: ")
+                        continue
+                    else:
+                        break
+                except ValueError as e:
+                    move_string = input(e)
                     continue
-                else:
-                    break
 
             self.change_current_player()

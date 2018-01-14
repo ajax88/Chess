@@ -110,6 +110,7 @@ class ChessBoard(Board):
 
         for piece in pieces:
             if piece.get_name() == pieceType:
+                # TODO Duplicate piece move to same place?
                 success = piece.move(destinationRow, destinationCol)
                 if success:
                     return True
@@ -231,3 +232,34 @@ class ChessBoard(Board):
             # check the last square for a piece of the opposing color or None
         curr_spot = self.get_square(end_row, end_col)
         return False if curr_spot is None or curr_spot.is_white() != piece_is_white else True
+
+    def get_pieces(self, name, color):
+        to_return = []
+        if color == constants.WHITE:
+            for piece in self.white_pieces:
+                if piece.get_name() == name:
+                    to_return.append(piece)
+        elif color == constants.BLACK:
+            for piece in self.black_pieces:
+                if piece.get_name() == name:
+                    to_return.append(piece)
+        return to_return
+
+    def in_check(self, color):
+        if color != constants.WHITE and color != constants.BLACK:
+            raise ValueError(constants.INVALID_INPUT_COLOR)
+
+        if color == constants.WHITE:
+            white_king = self.get_pieces(constants.KING, constants.WHITE)[0]
+            for piece in self.black_pieces:
+                row, col = white_king.get_position()
+                if piece.can_move(row, col):
+                    return True
+
+        if color == constants.BLACK:
+            black_king = self.get_pieces(constants.KING, constants.BLACK)[0]
+            for piece in self.white_pieces:
+                row, col = black_king.get_position()
+                if piece.can_move(row, col):
+                    return True
+        return False

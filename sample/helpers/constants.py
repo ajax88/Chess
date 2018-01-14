@@ -10,6 +10,7 @@ WHITE = 'white'
 BLACK = 'black'
 INVALID_PAWN_MOVE = "Invalid pawn move."
 MOVE_OUT_OF_BOUNDS = "Move position is out of bounds."
+MOVE_KING_IN_CHECK = "Invalid move. Puts King in check."
 INVALID_INPUT_COLOR = "Color must be either black or white"
 PIECE_CHARS = ['n', 'b', 'r', 'k', 'q', 'p']
 BOARD_CHARS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']

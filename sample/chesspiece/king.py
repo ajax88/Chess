@@ -9,6 +9,7 @@ class King(ChessPiece):
     def move(self, to_row, to_col):
         if self.can_move(to_row, to_col):
             self.change_board(to_row, to_col)
+            # TODO implement own self check logic
             return True
         return False
 
