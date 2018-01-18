@@ -64,25 +64,19 @@ class ChessBoard(Board):
 
             # set up queen
             if i == 3:
-                self.set_square(Queen(self, colors[0 + self.flip_board], 7, i))
-                self.set_square(Queen(self, colors[1 - self.flip_board], 0, i))
-                if not self.flip_board:
-                    self.white_pieces.append(self.get_square(7, i))
-                    self.black_pieces.append(self.get_square(0, i))
-                else:
-                    self.black_pieces.append(self.get_square(7, i))
-                    self.white_pieces.append(self.get_square(0, i))
+                self.set_square(Queen(self, colors[0 + self.flip_board], 7, i + flip_board))
+                self.set_square(Queen(self, colors[1 - self.flip_board], 0, i + flip_board))
+                self.white_pieces.append(self.get_square(7 * (1-flip_board), i + flip_board))
+                self.black_pieces.append(self.get_square(7 * flip_board, i + flip_board))
 
             # set up king
             if i == 4:
-                self.set_square(King(self, colors[0 + self.flip_board], 7, i))
-                self.set_square(King(self, colors[1 - self.flip_board], 0, i))
-                if not self.flip_board:
-                    self.white_pieces.append(self.get_square(7, i))
-                    self.black_pieces.append(self.get_square(0, i))
-                else:
-                    self.black_pieces.append(self.get_square(7, i))
-                    self.white_pieces.append(self.get_square(0, i))
+                self.set_square(King(self, colors[0 + self.flip_board], 7, i - flip_board))
+                self.set_square(King(self, colors[1 - self.flip_board], 0, i - flip_board))
+                self.white_pieces.append(self.get_square(7 * (1-flip_board), i - flip_board))
+                self.black_pieces.append(self.get_square(7 * flip_board, i - flip_board))
+
+
 
     def set_square(self, piece, row = None, col = None):
         if not isinstance(piece, sample.chesspiece.abstract_chess_piece.ChessPiece):

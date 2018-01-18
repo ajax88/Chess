@@ -40,25 +40,6 @@ class ChessGame(Game):
             self.current_player = self.player2
         self.play_game()
 
-    def start(self, player1Name, player2Name):
-        self.player1.set_name(player1Name)
-        self.player2.set_name(player2Name)
-        while True:
-            try:
-                p1_color = input(player1Name + ", do you want black or white? ")
-                self.player1.set_color(p1_color)
-                break
-            except ValueError:
-                print("Color must be either black or white.")
-
-        self.player2.set_color(constants.get_other_color(self.player1.get_color()))
-        if (self.player1.color == "white") : 
-            self.current_player = self.player1
-        else:
-            self.current_player = self.player2
-        self.play_game()
-
-
     def print_board(self):
         print(self.board)
 
