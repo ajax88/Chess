@@ -1,7 +1,7 @@
 ## CHESS 
 
 ### August 12th 2017
-### Alex Jackson & Katie Hoskins
+### Alex Jackson & Katie Hoskins & Matthew Jackson
 
 #### Implemented:
 * Board + Chessboard
