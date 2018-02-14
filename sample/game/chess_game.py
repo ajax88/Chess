@@ -1,4 +1,3 @@
-from sample.game.abstract_game import Game
 from sample.board.chess_board import ChessBoard
 from sample.player.chess_player import ChessPlayer
 from sample.helpers import constants
@@ -6,7 +5,7 @@ from sample.helpers import constants
 import os
 
 
-class ChessGame(Game):
+class ChessGame(object):
     def __init__(self, flip_board):
         self.flip_board = flip_board
         self.board = ChessBoard(self.flip_board)

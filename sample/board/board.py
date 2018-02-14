@@ -1,5 +1,6 @@
 import sample.helpers.constants
 
+
 class Board(object):
     #               INITIALIZATION METHODS
 

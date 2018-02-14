@@ -84,6 +84,7 @@ class ChessPiece():
     def can_move(self, to_row, to_col):
         pass
 
+## TODO fix bug where you move to a valid square.... 
     def move_will_cause_check(self):
         board = self.get_board()
         board.set_square(None, self.row, self.col)

@@ -1,10 +1,9 @@
-from sample.player.abstract_player import Player
 from sample.helpers import constants
 
 
-class ChessPlayer(Player):
+class ChessPlayer(object):
     def __init__(self, name, board, color):
-        super().__init__(name)
+        self.name = name
         self.colors = [constants.WHITE, constants.BLACK]
         self.board = board
         self.color = color
