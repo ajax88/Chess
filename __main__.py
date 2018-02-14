@@ -19,6 +19,7 @@ def main():
             break
 
     game = ChessGame(flip_board)
+    # u stink 
     # game_window = WelcomePage()
     # game_window.buildWelcomePage(game)
 
