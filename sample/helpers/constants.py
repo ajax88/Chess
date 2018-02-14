@@ -18,9 +18,9 @@ BOARD_NUMS = [i for i in range(1, 9)]
 
 
 def get_other_color(color):
-    if str(color).__eq__(WHITE):
+    if str(color) == WHITE:
         return BLACK
-    elif str(color).__eq__(BLACK):
+    elif str(color) == BLACK:
         return WHITE
     else:
         raise ValueError(INVALID_INPUT_COLOR)

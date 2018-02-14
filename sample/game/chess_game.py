@@ -1,8 +1,8 @@
-from sample.board.chess_board import ChessBoard
-from sample.player.chess_player import ChessPlayer
-from sample.helpers import constants
-
 import os
+
+from sample.chessboard.chess_board import ChessBoard
+from sample.helpers import constants
+from sample.player.chess_player import ChessPlayer
 
 
 class ChessGame(object):

@@ -1,7 +1,7 @@
 # Base class for all other chess pieces
 from abc import ABCMeta, abstractmethod
 
-import sample.board.chess_board
+import sample.chessboard.chess_board
 import sample.helpers.constants
 
 
@@ -9,7 +9,7 @@ class ChessPiece():
     metaclass = ABCMeta
 
     def __init__(self, board, color, row, col, name):
-        if type(board) != sample.board.chess_board.ChessBoard:
+        if type(board) != sample.chessboard.chess_board.ChessBoard:
             raise TypeError("Must input valid chessboard.")
 
         if (color.lower() != sample.helpers.constants.WHITE) and (color.lower() != sample.helpers.constants.BLACK):

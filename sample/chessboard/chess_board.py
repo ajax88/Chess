@@ -1,14 +1,14 @@
-from sample.chesspiece.king import King
-from sample.chesspiece.knight import Knight
-from sample.chesspiece.pawn import Pawn
-from sample.chesspiece.queen import Queen
+from sample.chessboard.king import King
+from sample.chessboard.knight import Knight
+from sample.chessboard.pawn import Pawn
+from sample.chessboard.queen import Queen
 from termcolor import colored
 
-import sample.chesspiece.abstract_chess_piece
+import sample.chessboard.abstract_chess_piece
 from sample.helpers import constants
 from sample.board.board import Board
-from sample.chesspiece.bishop import Bishop
-from sample.chesspiece.rook import Rook
+from sample.chessboard.bishop import Bishop
+from sample.chessboard.rook import Rook
 
 
 class ChessBoard(Board):
@@ -79,7 +79,7 @@ class ChessBoard(Board):
 
 
     def set_square(self, piece, row = None, col = None):
-        if not isinstance(piece, sample.chesspiece.abstract_chess_piece.ChessPiece):
+        if not isinstance(piece, sample.chessboard.abstract_chess_piece.ChessPiece):
             if piece is not None:
                 raise ValueError("Chessboard squares must take a piece")
 
@@ -182,7 +182,7 @@ class ChessBoard(Board):
                 curr_spot = self.get_square(next_row, next_col)
 
                 # If there is a piece sitting at the current spot, move is not possible
-                if isinstance(curr_spot, sample.chesspiece.abstract_chess_piece.ChessPiece):
+                if isinstance(curr_spot, sample.chessboard.abstract_chess_piece.ChessPiece):
                     return True
                 next_row = next_row + -1 * r_dir
                 next_col = next_col + -1 * c_dir
@@ -198,7 +198,7 @@ class ChessBoard(Board):
 
             while next_col != end_col:
                 curr_spot = self.get_square(start_row, next_col)
-                if isinstance(curr_spot, sample.chesspiece.abstract_chess_piece.ChessPiece):
+                if isinstance(curr_spot, sample.chessboard.abstract_chess_piece.ChessPiece):
                     return True
                 next_col += c_dir
 
@@ -215,7 +215,7 @@ class ChessBoard(Board):
             while next_row != end_row:
                 curr_spot = self.get_square(next_row, start_col)
 
-                if isinstance(curr_spot, sample.chesspiece.abstract_chess_piece.ChessPiece):
+                if isinstance(curr_spot, sample.chessboard.abstract_chess_piece.ChessPiece):
                     return True
                 next_row += r_dir
 

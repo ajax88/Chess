@@ -1,10 +1,10 @@
 import unittest
 
 import sample.helpers.constants
-from sample.board.chess_board import ChessBoard
-from sample.chesspiece.bishop import Bishop
-from sample.chesspiece.rook import Rook
-from sample.chesspiece.pawn import Pawn
+from sample.chessboard.bishop import Bishop
+from sample.chessboard.chess_board import ChessBoard
+from sample.chessboard.pawn import Pawn
+from sample.chessboard.rook import Rook
 
 
 class TestChessBoardMethods(unittest.TestCase):

@@ -1,5 +1,5 @@
 import sample.helpers.constants
-from sample.chesspiece.abstract_chess_piece import ChessPiece
+from sample.chessboard.abstract_chess_piece import ChessPiece
 
 
 class Pawn(ChessPiece):

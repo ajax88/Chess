@@ -13,7 +13,7 @@ class ChessPlayer(object):
 
     def set_color(self, color):
         color = str(color).lower()
-        if not self.colors.__contains__(color):
+        if color not in self.colors:
             raise ValueError("Player color must be either white or black.")
         else:
             self.color = color
