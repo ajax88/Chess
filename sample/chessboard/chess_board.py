@@ -12,9 +12,10 @@ from sample.chessboard.rook import Rook
 
 
 class ChessBoard(Board):
-    def __init__(self, flip_board=False):
+    def __init__(self, flip_board=False, debug=False):
         super().__init__(8, 8)
         self.flip_board = flip_board
+        self.debug = debug
         colors = [sample.helpers.constants.WHITE, sample.helpers.constants.BLACK]
         self.white_pieces = []
         self.black_pieces = []
@@ -92,57 +93,72 @@ class ChessBoard(Board):
 
             # side numbers 
             my_str += '\n'
-            my_str += str(self.flip_board * (i + 1) + (1 - self.flip_board) * (8 - i))
+            if not self.debug:
+                my_str += str(self.flip_board * (i + 1) + (1 - self.flip_board) * (8 - i))
+            else:
+                my_str += str(i)
 
             my_str += '|'
 
-            for j in range(self.col):
-                piece = self.get_square(i, j)
-                piece_color = 'grey'
-                if piece is None:
-                    char_piece = sample.helpers.constants.BLANK_CHAR
-                else:
-                    char_piece = piece.get_name()
-                    if piece.is_white():
-                        piece_color = 'red'
+            if not self.debug:
+                for j in range(self.col):
+                    piece = self.get_square(i, j)
+                    piece_color = 'grey'
+                    if piece is None:
+                        char_piece = sample.helpers.constants.BLANK_CHAR
+                    else:
+                        char_piece = piece.get_name()
+                        if piece.is_white():
+                            piece_color = 'red'
 
-                if ((i % 2 == 0 and j % 2 == 0) or (i % 2 != 0 and j % 2 != 0)) - self.flip_board:
-                    my_str += colored(char_piece, piece_color)
-                else:
-                    my_str += colored(char_piece, piece_color, 'on_white')
+                    if ((i % 2 == 0 and j % 2 == 0) or (i % 2 != 0 and j % 2 != 0)) - self.flip_board:
+                        my_str += colored(char_piece, piece_color)
+                    else:
+                        my_str += colored(char_piece, piece_color, 'on_white')
 
-                my_str += '|'
+                    my_str += '|'
+            else:
+                for j in range(self.col):
+                    piece = self.get_square(i, j)
+                    if piece is None:
+                        my_str += sample.helpers.constants.BLANK_CHAR
+                    else:
+                        my_str += piece.get_name()
+                    my_str += '|'
 
             my_str += '\n'
         # last dash border
         my_str += ' '
         for _ in range(self.row):
             my_str += ' -'
-        if not self.flip_board:
-            my_str += '\n  a b c d e f g h'
+        if not self.debug:
+            if not self.flip_board:
+                my_str += '\n  a b c d e f g h'
+            else:
+                my_str += '\n  h f g e d c b a'
         else:
-            my_str += '\n  h f g e d c b a'
+            my_str += '\n  0 1 2 3 4 5 6 7'
         return my_str
 
     def is_blocked(self, start_row, start_col, end_row, end_col):
         piece_list = [row_col for row_col in generate_inbetween_squares(start_row, start_col, end_row, end_col)]
 
+        start_piece_is_white = False
         for i in range(len(piece_list)):
             row, col = piece_list[i]
             piece = self.get_square(row, col)
-            start_piece_is_white = False
             if i == 0:
                 if piece is None:
                         raise ValueError("Starting position in is_blocked must have piece.")
                 else:
                     start_piece_is_white = piece.is_white()
-            elif i == len(piece_list):
+            elif i == len(piece_list) - 1:
                 if piece.is_white() == start_piece_is_white:
                     return True
             else:
                 if piece is not None:
                     return True
-            return False
+        return False
 
     def get_pieces(self, name, color):
         to_return = []

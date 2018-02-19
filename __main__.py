@@ -17,8 +17,16 @@ def main():
         if response.lower() == "n":
             flip_board = False
             break
+    while True:
+        response = input("Would you like to enable debug mode (y/n)")
+        if response.lower() == "y":
+            debug = True
+            break
+        if response.lower() == "n":
+            debug = False
+            break
 
-    game = ChessGame(flip_board)
+    game = ChessGame(flip_board, debug)
     # game_window = WelcomePage()
     # game_window.buildWelcomePage(game)
 

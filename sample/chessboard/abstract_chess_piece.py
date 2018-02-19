@@ -18,10 +18,8 @@ class ChessPiece():
         self.name = name
         self.board = board
         self.color = color.lower()
-        self.taken = False
         self.set_position(row, col)
         self.has_moved = False
-        self.old_board = None
 
     def get_name(self):
         return self.name
@@ -34,12 +32,6 @@ class ChessPiece():
 
     def get_position(self):
         return self.row, self.col
-
-    def got_taken(self):
-        self.taken = True
-
-    def is_taken(self):
-        return self.taken
 
     def is_white(self):
         return self.color == sample.helpers.constants.WHITE
@@ -96,6 +88,7 @@ class ChessPiece():
         old_piece = self.board.get_square(to_row, to_col)
         if old_piece is not None:
             old_piece_copy = old_piece.deep_copy()
+            old_piece_copy.set_has_moved(old_piece.has_moved)
 
         def rollback():
             self.board.set_square(sample.helpers.constants.BLANK, self.row, self.col)

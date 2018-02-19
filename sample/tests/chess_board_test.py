@@ -1,8 +1,8 @@
 import unittest
 
 import sample.helpers.constants
-from sample.chessboard.bishop import Bishop
 from sample.chessboard.chess_board import ChessBoard
+from sample.chessboard.bishop import Bishop
 from sample.chessboard.pawn import Pawn
 from sample.chessboard.rook import Rook
 
@@ -19,8 +19,7 @@ class TestChessBoardMethods(unittest.TestCase):
         p1 = board.get_white_pieces()[0]
         p1_row, p1_col = p1.get_position()
 
-        with (self.assertRaises(ValueError)):
-            p1.move(p1_row - 1, p1_col + 1)
+        self.assertEqual(p1.move(p1_row - 1, p1_col + 1), False)
 
     def test_is_blocked_horz(self):
         board = ChessBoard()
@@ -74,7 +73,7 @@ class TestChessBoardMethods(unittest.TestCase):
             board.is_blocked(3, 1, 4, 4)
 
     def test_is_blocked_taking_piece(self):
-        board = ChessBoard()
+        board = ChessBoard(debug=True)
         p1 = Pawn(board, sample.helpers.constants.WHITE, 4, 3)
         p2 = Pawn(board, sample.helpers.constants.BLACK, 3, 4)
         board.set_square(p1)
@@ -93,6 +92,7 @@ class TestChessBoardMethods(unittest.TestCase):
         board.set_square(p8)
         p9 = Pawn(board, sample.helpers.constants.BLACK, 5, 3)
         board.set_square(p9)
+        print(board)
 
         self.assertEqual(board.is_blocked(4, 3, 6, 5), False)
         self.assertEqual(board.is_blocked(4, 3, 2, 1), False)

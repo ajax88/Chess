@@ -20,6 +20,7 @@
   * Add relativity methods... e.g is_horz, is_vert, is_L... Tells you if a piece is_horz to another
 
 ##### P2
+* Replace user prompts with clas
 * Checkmate
 * Stalement
 * Castle (both sides)

@@ -6,9 +6,10 @@ from sample.player.chess_player import ChessPlayer
 
 
 class ChessGame(object):
-    def __init__(self, flip_board):
+    def __init__(self, flip_board, debug):
         self.flip_board = flip_board
-        self.board = ChessBoard(self.flip_board)
+        self.debug = debug
+        self.board = ChessBoard(self.flip_board, self.debug)
         self.player1 = ChessPlayer(constants.BLANK_CHAR, self.board, None)
         self.player2 = ChessPlayer(constants.BLANK_CHAR, self.board, None)
         if self.flip_board:
