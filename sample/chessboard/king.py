@@ -6,13 +6,6 @@ class King(ChessPiece):
     def __init__(self, board, color, row, col):
         super().__init__(board, color, row, col, sample.helpers.constants.KING)
 
-    def move(self, to_row, to_col):
-        if self.can_move(to_row, to_col):
-            self.change_board(to_row, to_col)
-            # TODO implement own self check logic
-            return True
-        return False
-
     def can_move(self, to_row, to_col):
         if abs(to_col - self.col) == 2 and to_row == self.row: # castle on either side
             if self.has_moved:

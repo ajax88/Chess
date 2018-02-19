@@ -20,63 +20,33 @@ class ChessBoard(Board):
         self.black_pieces = []
         for i in range(8):
             # set up pawns
-            self.set_square(Pawn(self, colors[0 + self.flip_board], 6, i))
-            self.set_square(Pawn(self, colors[1 - self.flip_board], 1, i))
-            if not self.flip_board:
-                self.white_pieces.append(self.get_square(6, i))
-                self.black_pieces.append(self.get_square(1, i))
-            else:
-                self.black_pieces.append(self.get_square(6, i))
-                self.white_pieces.append(self.get_square(1, i))
+            self.add_piece(Pawn(self, colors[0 + self.flip_board], 6, i))
+            self.add_piece(Pawn(self, colors[1 - self.flip_board], 1, i))
 
             # set up rooks
             if i == 0 or i == 7:
-                self.set_square(Rook(self, colors[0 + self.flip_board], 7, i))
-                self.set_square(Rook(self, colors[1 - self.flip_board], 0, i))
-                if not self.flip_board:
-                    self.white_pieces.append(self.get_square(7, i))
-                    self.black_pieces.append(self.get_square(0, i))
-                else:
-                    self.black_pieces.append(self.get_square(7, i))
-                    self.white_pieces.append(self.get_square(0, i))
+                self.add_piece(Rook(self, colors[0 + self.flip_board], 7, i))
+                self.add_piece(Rook(self, colors[1 - self.flip_board], 0, i))
 
             # set up knights
             if i == 1 or i == 6:
-                self.set_square(Knight(self, colors[0 + self.flip_board], 7, i))
-                self.set_square(Knight(self, colors[1 - self.flip_board], 0, i))
-                if not self.flip_board:
-                    self.white_pieces.append(self.get_square(7, i))
-                    self.black_pieces.append(self.get_square(0, i))
-                else:
-                    self.black_pieces.append(self.get_square(7, i))
-                    self.white_pieces.append(self.get_square(0, i))
+                self.add_piece(Knight(self, colors[0 + self.flip_board], 7, i))
+                self.add_piece(Knight(self, colors[1 - self.flip_board], 0, i))
 
             # set up bishops 
             if i == 2 or i == 5:
-                self.set_square(Bishop(self, colors[0 + self.flip_board], 7, i))
-                self.set_square(Bishop(self, colors[1 - self.flip_board], 0, i))
-                if not self.flip_board:
-                    self.white_pieces.append(self.get_square(7, i))
-                    self.black_pieces.append(self.get_square(0, i))
-                else:
-                    self.black_pieces.append(self.get_square(7, i))
-                    self.white_pieces.append(self.get_square(0, i))
+                self.add_piece(Bishop(self, colors[0 + self.flip_board], 7, i))
+                self.add_piece(Bishop(self, colors[1 - self.flip_board], 0, i))
 
             # set up queen
             if i == 3:
-                self.set_square(Queen(self, colors[0 + self.flip_board], 7, i + flip_board))
-                self.set_square(Queen(self, colors[1 - self.flip_board], 0, i + flip_board))
-                self.white_pieces.append(self.get_square(7 * (1-flip_board), i + flip_board))
-                self.black_pieces.append(self.get_square(7 * flip_board, i + flip_board))
+                self.add_piece(Queen(self, colors[0 + self.flip_board], 7, i + flip_board))
+                self.add_piece(Queen(self, colors[1 - self.flip_board], 0, i + flip_board))
 
             # set up king
             if i == 4:
-                self.set_square(King(self, colors[0 + self.flip_board], 7, i - flip_board))
-                self.set_square(King(self, colors[1 - self.flip_board], 0, i - flip_board))
-                self.white_pieces.append(self.get_square(7 * (1-flip_board), i - flip_board))
-                self.black_pieces.append(self.get_square(7 * flip_board, i - flip_board))
-
-
+                self.add_piece(King(self, colors[0 + self.flip_board], 7, i - flip_board))
+                self.add_piece(King(self, colors[1 - self.flip_board], 0, i - flip_board))
 
     def set_square(self, piece, row = None, col = None):
         if not isinstance(piece, sample.chessboard.abstract_chess_piece.ChessPiece):
@@ -108,7 +78,6 @@ class ChessBoard(Board):
                 success = piece.move(destinationRow, destinationCol)
                 if success:
                     return True
-
         return False
 
     def __str__(self):
@@ -257,3 +226,7 @@ class ChessBoard(Board):
                 if piece.can_move(row, col):
                     return True
         return False
+
+    def add_piece(self, piece):
+        self.set_square(piece)
+        self.white_pieces.append(piece) if piece.color == constants.WHITE else self.black_pieces.append(piece)

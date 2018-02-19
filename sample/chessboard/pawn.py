@@ -8,14 +8,6 @@ class Pawn(ChessPiece):
         self.going_up = True if (self.is_white() and not self.board.is_flipped()) or \
             (self.is_black() and self.board.is_flipped()) else False
 
-    def move(self, to_row, to_col):
-        if self.can_move(to_row, to_col):
-            if self.move_will_cause_check():
-                raise ValueError(sample.helpers.constants.MOVE_KING_IN_CHECK)
-            self.change_board(to_row, to_col)
-            return True
-        return False
-
     def can_move(self, to_row, to_col):
         # diagonal moves
         if to_col != self.col:

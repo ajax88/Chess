@@ -3,6 +3,7 @@ from abc import ABCMeta, abstractmethod
 
 import sample.chessboard.chess_board
 import sample.helpers.constants
+import copy
 
 
 class ChessPiece():
@@ -21,6 +22,7 @@ class ChessPiece():
         self.taken = False
         self.set_position(row, col)
         self.has_moved = False
+        self.old_board = None
 
     def get_name(self):
         return self.name
@@ -76,19 +78,38 @@ class ChessPiece():
     # Returns: 
     #       False for all improper input (invalid move)
     #       True for a valid move
-    @abstractmethod
     def move(self, to_row, to_col):
-        pass
+        if self.can_move(to_row, to_col):
+            rollback = self.prep_rollback(to_row, to_col)
+            self.change_board(to_row, to_col)
+            if self.board.in_check(self.color):
+                rollback()
+                raise ValueError(sample.helpers.constants.MOVE_KING_IN_CHECK)
+            return True
+        return False
 
     @abstractmethod
     def can_move(self, to_row, to_col):
         pass
 
-## TODO fix bug where you move to a valid square.... 
-    def move_will_cause_check(self):
-        board = self.get_board()
-        board.set_square(None, self.row, self.col)
-        in_check = board.in_check(self.color)
-        board.set_square(self)
-        return in_check
+    def prep_rollback(self, to_row, to_col):
+        old_row, old_col = self.row, self.col
+        old_piece = self.board.get_square(to_row, to_col)
+        if old_piece is not None:
+            old_piece_copy = old_piece.deep_copy()
 
+        def rollback():
+            self.board.set_square(sample.helpers.constants.BLANK, self.row, self.col)
+            self.row = old_row
+            self.col = old_col
+            self.board.set_square(self)
+            if old_piece is not None:
+                self.board.add_piece(old_piece_copy)
+
+        return rollback
+
+    def deep_copy(self):
+        return type(self)(self.board, self.color, self.row, self.col)
+
+    def __str__(self):
+        return "{} {}: {}, {}".format(self.color, self.name, self.row, self.col)

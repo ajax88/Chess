@@ -79,13 +79,16 @@ class ChessGame(object):
 
         if len(move) == 2:
             row, col = self.convert_to_row_col(move)
-            print(row, col)
             return 'p', self.current_player.get_color(), row, col
         elif len(move) == 3:
+            if move == "O-O":
+                pass # attempt castle
             row, col = self.convert_to_row_col(move[1:])
             return move[0], self.current_player.get_color(), row, col
         elif len(move) == 4:
             pass  # specific pawn move
+        elif len(move) == 5 and move == "O-O-O":
+            pass # attempt qsc
         elif len(move) == 6:
             pass  # specific move:
         else:
