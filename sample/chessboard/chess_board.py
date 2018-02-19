@@ -125,76 +125,24 @@ class ChessBoard(Board):
         return my_str
 
     def is_blocked(self, start_row, start_col, end_row, end_col):
-        # Ensure that boundary squares are unique
-        if start_row == end_row and start_col == end_col:
-            raise ValueError("is_blocked must take unique positions.")
+        piece_list = [row_col for row_col in generate_inbetween_squares(start_row, start_col, end_row, end_col)]
 
-        piece = self.get_square(start_row, start_col)
-        if piece is None:
-            raise ValueError("Starting position in is_blocked must have piece.")
-        piece_is_white = piece.is_white()
-
-        # Case 1: Diagonal move
-        if abs(end_row - start_row) == abs(end_col - start_col):
-            next_row = start_row
-            next_col = start_col
-
-            # Determine if column and row values should increase or decrease to get
-            # diagonal direction
-            r_dir = 1 if (start_row - end_row) > 0 else -1
-            c_dir = 1 if (start_col - end_col) > 0 else -1
-
-            next_row = next_row + -1 * r_dir
-            next_col = next_col + -1 * c_dir
-
-            while next_row != end_row and next_col != end_col:
-                curr_spot = self.get_square(next_row, next_col)
-
-                # If there is a piece sitting at the current spot, move is not possible
-                if isinstance(curr_spot, sample.chessboard.abstract_chess_piece.ChessPiece):
+        for i in range(len(piece_list)):
+            row, col = piece_list[i]
+            piece = self.get_square(row, col)
+            start_piece_is_white = False
+            if i == 0:
+                if piece is None:
+                        raise ValueError("Starting position in is_blocked must have piece.")
+                else:
+                    start_piece_is_white = piece.is_white()
+            elif i == len(piece_list):
+                if piece.is_white() == start_piece_is_white:
                     return True
-                next_row = next_row + -1 * r_dir
-                next_col = next_col + -1 * c_dir
-
-        # Case 2: Horizontal move
-        elif start_row == end_row:
-            c_dir = 1
-            next_col = start_col
-            if start_col - end_col > 0:
-                c_dir = -1
-
-            next_col += c_dir
-
-            while next_col != end_col:
-                curr_spot = self.get_square(start_row, next_col)
-                if isinstance(curr_spot, sample.chessboard.abstract_chess_piece.ChessPiece):
+            else:
+                if piece is not None:
                     return True
-                next_col += c_dir
-
-
-        # Case 3: Vertical move
-        elif start_col == end_col:
-            r_dir = 1
-            next_row = start_row
-            if start_row - end_row > 0:
-                r_dir = -1
-
-            next_row += r_dir
-
-            while next_row != end_row:
-                curr_spot = self.get_square(next_row, start_col)
-
-                if isinstance(curr_spot, sample.chessboard.abstract_chess_piece.ChessPiece):
-                    return True
-                next_row += r_dir
-
-        else:
-            raise ValueError("is_blocked must take straight path.")
-
-
-            # check the last square for a piece of the opposing color or None
-        curr_spot = self.get_square(end_row, end_col)
-        return False if curr_spot is None or curr_spot.is_white() != piece_is_white else True
+            return False
 
     def get_pieces(self, name, color):
         to_return = []
@@ -230,3 +178,40 @@ class ChessBoard(Board):
     def add_piece(self, piece):
         self.set_square(piece)
         self.white_pieces.append(piece) if piece.color == constants.WHITE else self.black_pieces.append(piece)
+
+
+# generates all squares between (start_row, start_col) -> (end_row, end_col), inclusive
+def generate_inbetween_squares(start_row, start_col, end_row, end_col):
+         # Ensure that boundary squares are unique
+        if start_row == end_row and start_col == end_col:
+            raise ValueError("generator must take unique positions.")
+
+        # Case 1: Diagonal move
+        abs_distance = 0
+        r_dir, c_dir = 0, 0
+        if abs(end_row - start_row) == abs(end_col - start_col):
+            abs_distance = abs(end_row - start_row)
+            # Determine if column and row values should increase or decrease to get
+            # diagonal direction
+            r_dir = -1 if (start_row - end_row) > 0 else 1
+            c_dir = -1 if (start_col - end_col) > 0 else 1
+
+        # Case 2: Horizontal move
+        elif start_row == end_row:
+            abs_distance = abs(start_col - end_col)
+            c_dir = -1 if (start_col - end_col) > 0 else 1
+
+        # Case 3: Vertical move
+        elif start_col == end_col:
+            abs_distance = abs(start_row - end_row)
+            r_dir = -1 if (start_row - end_row) > 0 else 1
+
+        else:
+            raise ValueError("Inbetween generator must take straight path.")
+
+        next_row, next_col = start_row, start_col
+        yield (next_row, next_col)
+        for _ in range(abs_distance):
+            next_row += r_dir
+            next_col += c_dir
+            yield (next_row, next_col)

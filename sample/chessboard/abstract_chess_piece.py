@@ -3,7 +3,6 @@ from abc import ABCMeta, abstractmethod
 
 import sample.chessboard.chess_board
 import sample.helpers.constants
-import copy
 
 
 class ChessPiece():
@@ -43,7 +42,7 @@ class ChessPiece():
         return self.taken
 
     def is_white(self):
-        return self.color == 'white'
+        return self.color == sample.helpers.constants.WHITE
 
     def is_black(self):
         return not self.is_white()
