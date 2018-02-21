@@ -16,7 +16,7 @@ class ChessBoard(Board):
         super().__init__(8, 8)
         self.flip_board = flip_board
         self.debug = debug
-        colors = [sample.helpers.constants.WHITE, sample.helpers.constants.BLACK]
+        colors = [constants.WHITE, constants.BLACK]
         self.white_pieces = []
         self.black_pieces = []
         for i in range(8):
@@ -67,16 +67,16 @@ class ChessBoard(Board):
     def is_flipped(self):
         return self.flip_board
 
-    def makeMove(self, pieceType, color, destinationRow, destinationCol):
+    def make_move(self, piece_type, color, destination_row, destination_col):
         if color == constants.WHITE:
             pieces = self.white_pieces
         else:
             pieces = self.black_pieces
 
         for piece in pieces:
-            if piece.get_name() == pieceType:
+            if piece.get_name() == piece_type:
                 # TODO Duplicate piece move to same place?
-                success = piece.move(destinationRow, destinationCol)
+                success = piece.move(destination_row, destination_col)
                 if success:
                     return True
         return False
@@ -153,7 +153,7 @@ class ChessBoard(Board):
                 else:
                     start_piece_is_white = piece.is_white()
             elif i == len(piece_list) - 1:
-                if piece.is_white() == start_piece_is_white:
+                if piece is not None and piece.is_white() == start_piece_is_white:
                     return True
             else:
                 if piece is not None:
@@ -194,6 +194,13 @@ class ChessBoard(Board):
     def add_piece(self, piece):
         self.set_square(piece)
         self.white_pieces.append(piece) if piece.color == constants.WHITE else self.black_pieces.append(piece)
+
+    def __eq__(self, other):
+        for i in range(len(self.board)):
+            for j in range(len(self.board[0])):
+                if self.get_square(i, j) != other.get_square(i, j):
+                    return False
+        return True
 
 
 # generates all squares between (start_row, start_col) -> (end_row, end_col), inclusive

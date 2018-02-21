@@ -45,8 +45,8 @@ class ChessPiece():
     def get_board(self):
         return self.board
 
-    def set_has_moved(self):
-        self.has_moved = True
+    def set_has_moved(self, has_moved):
+        self.has_moved = has_moved
 
     def has_moved(self):
         return self.has_moved
@@ -59,7 +59,7 @@ class ChessPiece():
             
         self.set_position(to_row, to_col)
         self.board.set_square(self)
-        self.set_has_moved()
+        self.set_has_moved(True)
 
     # Input: a new position for the piece to move to (row, col)
     # 
@@ -105,3 +105,10 @@ class ChessPiece():
 
     def __str__(self):
         return "{} {}: {}, {}".format(self.color, self.name, self.row, self.col)
+
+    def __eq__(self, other):
+        if other is not None and self.name == other.name and self.row == other.row and self.col == other.col and \
+                        self.color == other.color:
+            return True
+        else:
+            return False

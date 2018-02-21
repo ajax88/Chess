@@ -12,10 +12,13 @@ class ChessGame(object):
         self.board = ChessBoard(self.flip_board, self.debug)
         self.player1 = ChessPlayer(constants.BLANK_CHAR, self.board, None)
         self.player2 = ChessPlayer(constants.BLANK_CHAR, self.board, None)
+        self.current_player = self.player1
+        self.board_chars = constants.BOARD_CHARS[:]
+        self.board_nums = constants.BOARD_NUMS[:]
         if self.flip_board:
-            constants.BOARD_CHARS.reverse()
+            self.board_chars.reverse()
         else:
-            constants.BOARD_NUMS.reverse()
+            self.board_nums.reverse()
 
     def start(self, player1Name='', player2Name=''):
         if player1Name == '' and player2Name == '':
@@ -95,11 +98,6 @@ class ChessGame(object):
         else:
             raise ValueError("Invalid move input.")
 
-    def convert_to_row_col(self, letter_number):
-        letter = letter_number[0]
-        number = letter_number[1]
-        return constants.BOARD_NUMS.index(int(number)), constants.BOARD_CHARS.index(letter)
-
     def play_game(self):
         game_over = False
         while (not game_over):
@@ -125,7 +123,7 @@ class ChessGame(object):
                     move_string = input("Bad move dude. Baaaaaaad move. Try again: ")
                     continue
                 try:
-                    moveSuccess = self.board.makeMove(pieceType, color, row, col)
+                    moveSuccess = self.board.make_move(pieceType, color, row, col)
                     if not moveSuccess:
                         move_string = input("Invalid move. Please enter a new, valid move: ")
                         continue
@@ -136,3 +134,8 @@ class ChessGame(object):
                     continue
 
             self.change_current_player()
+
+    def convert_to_row_col(self, letter_number):
+            letter = letter_number[0]
+            number = letter_number[1]
+            return self.board_nums.index(int(number)), self.board_chars.index(letter)

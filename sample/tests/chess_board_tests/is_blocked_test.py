@@ -1,5 +1,4 @@
 import unittest
-
 import sample.helpers.constants
 from sample.chessboard.chess_board import ChessBoard
 from sample.chessboard.bishop import Bishop
