@@ -83,12 +83,12 @@ class ChessGame(object):
 
         if len(move) == 2:
             row, col = self.convert_to_row_col(move)
-            return 'p', self.current_player.get_color(), row, col, move[0], move[1]
+            return 'p', self.current_player.get_color(), row, col
         elif len(move) == 3:
             if move == "O-O":
                 pass # attempt castle
-            row, col = self.convert_to_row_col(move[1:]) # todo parse to readable square and return
-            return move[0], self.current_player.get_color(), row, col, move[1:][0], move[1:][1]
+            row, col = self.convert_to_row_col(move[1:])
+            return move[0], self.current_player.get_color(), row, col
         elif len(move) == 4:
             pass  # specific pawn move
         elif len(move) == 5 and move == "O-O-O":
@@ -111,18 +111,21 @@ class ChessGame(object):
             print(list(map(lambda piece: piece.get_name(), self.board.get_white_pieces())) if is_white
                   else list(map(lambda piece: piece.get_name(), self.board.get_black_pieces())))
 
-            move_success = False
+            moveSuccess = False
             move_string = input("Move: ")
-            while not move_success:
+            while not moveSuccess:
                 if move_string == "quit":
                     game_over = True
                     break
                 try:
-                    (pieceType, color, row, col, letter, num) = self.parse_move(move_string)
-                    move_success = self.board.make_move(pieceType, color, row, col)
-                    if not move_success:
-                        move_string = input("Cannot move {} {} to {}{}. Enter valid move:".format(color,
-                                                                  constants.PIECE_TO_NAME_MAP[pieceType], letter, num))
+                    (pieceType, color, row, col) = self.parse_move(move_string)
+                except ValueError:
+                    move_string = input("Bad move dude. Baaaaaaad move. Try again: ")
+                    continue
+                try:
+                    moveSuccess = self.board.make_move(pieceType, color, row, col)
+                    if not moveSuccess:
+                        move_string = input("Invalid move. Please enter a new, valid move: ")
                         continue
                     else:
                         break
@@ -131,11 +134,6 @@ class ChessGame(object):
                     continue
 
             self.change_current_player()
-            if self.board.in_checkmate(self.current_player.color):
-                game_over = True
-
-        print("Game Over!!")
-
 
     def convert_to_row_col(self, letter_number):
             letter = letter_number[0]

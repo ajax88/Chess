@@ -176,25 +176,20 @@ class ChessBoard(Board):
         if color != constants.WHITE and color != constants.BLACK:
             raise ValueError(constants.INVALID_INPUT_COLOR)
 
-        pieces_threatening_check = []
         if color == constants.WHITE:
             white_king = self.get_pieces(constants.KING, constants.WHITE)[0]
             for piece in self.black_pieces:
                 row, col = white_king.get_position()
                 if piece.can_move(row, col):
-                    pieces_threatening_check.append(piece)
+                    return True
 
         if color == constants.BLACK:
             black_king = self.get_pieces(constants.KING, constants.BLACK)[0]
             for piece in self.white_pieces:
                 row, col = black_king.get_position()
                 if piece.can_move(row, col):
-                    pieces_threatening_check.append(piece)
-
-        if len(pieces_threatening_check) == 0:
-            return False, pieces_threatening_check
-        else:
-            return True, pieces_threatening_check
+                    return True
+        return False
 
     def add_piece(self, piece):
         self.set_square(piece)
@@ -207,36 +202,15 @@ class ChessBoard(Board):
                     return False
         return True
 
-    def in_checkmate(self, color):
-        in_check, pieces_threatening_check = self.in_check(color)
-        if not in_check:
-            return False
-        king = self.get_pieces(constants.KING, color)[0]
-        if not king.stuck():
-            return False
-
-        if len(pieces_threatening_check) > 1:
-            return True
-        # if not, check if any pieces of can move in front of
-        attack_row, attack_col = pieces_threatening_check[0].row, pieces_threatening_check[0].col
-        blocking_squares = [(row, col) for row, col in generate_inbetween_squares(attack_row, attack_col, king.row, king.col)]
-        blocking_squares.remove((king.row, king.col))
-        protecting_pieces = self.white_pieces if color == constants.WHITE else self.black_pieces
-        for piece in protecting_pieces:
-            for square in blocking_squares:
-                if piece.try_move(square[0], square[1]):
-                    return False
-
-        return True
-
 
 # generates all squares between (start_row, start_col) -> (end_row, end_col), inclusive
 def generate_inbetween_squares(start_row, start_col, end_row, end_col):
-        # Ensure that boundary squares are unique
+         # Ensure that boundary squares are unique
         if start_row == end_row and start_col == end_col:
             raise ValueError("generator must take unique positions.")
 
         # Case 1: Diagonal move
+        abs_distance = 0
         r_dir, c_dir = 0, 0
         if abs(end_row - start_row) == abs(end_col - start_col):
             abs_distance = abs(end_row - start_row)
