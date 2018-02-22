@@ -15,6 +15,7 @@ INVALID_INPUT_COLOR = "Color must be either black or white\n"
 PIECE_CHARS = ['n', 'b', 'r', 'k', 'q', 'p']
 BOARD_CHARS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 BOARD_NUMS = [i for i in range(1, 9)]
+PIECE_TO_NAME_MAP = {PAWN: "pawn", BISHOP: "bishop", KING: "king", QUEEN: "queen", KNIGHT: "knight", ROOK: "rook"}
 
 
 def get_other_color(color):

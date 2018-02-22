@@ -1,5 +1,6 @@
 import sample.helpers.constants
 from .abstract_chess_piece import ChessPiece
+from .abstract_chess_piece import out_of_bounds
 
 
 class King(ChessPiece):
@@ -18,3 +19,13 @@ class King(ChessPiece):
         if abs(to_col - self.col) == 1 or abs(to_row - self.row) == 1:
             curr_spot = self.board.get_square(to_row, to_col)
             return True if curr_spot is None or self.is_white() != curr_spot.is_white() else False
+
+    def stuck(self):
+        for i in range(-1, 2):
+            for j in range(-1, 2):
+                p_row, p_col = self.row + i, self.col + j
+                if not (i == 0 and j == 0) and not out_of_bounds(p_row, p_col):
+                    if self.try_move(p_row, p_col):
+                        return False
+
+        return True
