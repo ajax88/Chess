@@ -6,7 +6,7 @@ from sample.chessboard.pawn import Pawn
 from sample.chessboard.rook import Rook
 
 
-class TestChessBoardMethods(unittest.TestCase):
+class TestIsBlocked(unittest.TestCase):
     def test_initialization(self):
         ChessBoard()
 
@@ -91,7 +91,6 @@ class TestChessBoardMethods(unittest.TestCase):
         board.set_square(p8)
         p9 = Pawn(board, sample.helpers.constants.BLACK, 5, 3)
         board.set_square(p9)
-        print(board)
 
         self.assertEqual(board.is_blocked(4, 3, 6, 5), False)
         self.assertEqual(board.is_blocked(4, 3, 2, 1), False)

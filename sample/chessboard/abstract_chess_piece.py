@@ -25,7 +25,7 @@ class ChessPiece():
         return self.name
 
     def set_position(self, row, col):
-        if row >= 8 or row < 0 or col >= 8 or col < 0:
+        if out_of_bounds(row, col):
             raise ValueError('Index out of bounds')
         self.row = row
         self.col = col
@@ -61,22 +61,26 @@ class ChessPiece():
         self.board.set_square(self)
         self.set_has_moved(True)
 
-    # Input: a new position for the piece to move to (row, col)
-    # 
-    # This method will update the board and change the piece's position
-    # upon a valid move
-    # 
-    # Returns: 
-    #       False for all improper input (invalid move)
-    #       True for a valid move
     def move(self, to_row, to_col):
         if self.can_move(to_row, to_col):
             rollback = self.prep_rollback(to_row, to_col)
             self.change_board(to_row, to_col)
-            if self.board.in_check(self.color):
+            in_check, _ = self.board.in_check(self.color)
+            if in_check:
                 rollback()
                 raise ValueError(sample.helpers.constants.MOVE_KING_IN_CHECK)
             return True
+        return False
+
+    # similar to move, but will not actually move the piece. Just will return true if a piece can move to a square,
+    # while accounting for check
+    def try_move(self, to_row, to_col):
+        if self.can_move(to_row, to_col):
+            rollback = self.prep_rollback(to_row, to_col)
+            self.change_board(to_row, to_col)
+            in_check, _ = self.board.in_check(self.color)
+            rollback()
+            return not in_check
         return False
 
     @abstractmethod
@@ -112,3 +116,9 @@ class ChessPiece():
             return True
         else:
             return False
+
+
+def out_of_bounds(row, col):
+    if row < 0 or row >= 8 or col < 0 or col >= 8:
+        return True
+    return False

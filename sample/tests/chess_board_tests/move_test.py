@@ -6,7 +6,7 @@ from sample.helpers import constants
 from sample.game.chess_game import ChessGame
 
 
-class TestChessBoardMethods(unittest.TestCase):
+class TestMove(unittest.TestCase):
     def test_basic_opening(self):
         game = ChessGame(False, True)
         comp_board = ChessBoard()
@@ -23,21 +23,32 @@ class TestChessBoardMethods(unittest.TestCase):
         self.classic_opening(game, comp_board)
         self.execute_expected_error_move(game, "b3")
 
+    def test_multiple_moves_into_check(self):
+        game = ChessGame(False, True)
+        comp_board = ChessBoard()
+
+        self.classic_opening(game, comp_board)
+        # c3
+        comp_board.set_square(None, 6, 2)
+        comp_board.set_square(Pawn(comp_board, constants.WHITE, 5, 2))
+        self.execute_expected_error_move(game, "b3")
+        self.execute_expected_error_move(game, "f4")
+        self.execute_expected_valid_move(game, "c3")
+        self.assertEqual(game.board, comp_board)
+
     # Aux methods
     def execute_expected_valid_move(self, game, move_string):
-        (piece_type, color, row, col) = game.parse_move(move_string)
+        (piece_type, color, row, col, letter, num) = game.parse_move(move_string)
         self.assertTrue(game.board.make_move(piece_type, color, row, col))
         game.change_current_player()
 
     def execute_expected_error_move(self, game, move_string):
-        (piece_type, color, row, col) = game.parse_move(move_string)
+        (piece_type, color, row, col, letter, num) = game.parse_move(move_string)
         self.assertRaises(ValueError, game.board.make_move, piece_type, color, row, col)
-        game.change_current_player()
 
     def execute_expected_invalid_move(self, game, move_string):
-        (piece_type, color, row, col) = game.parse_move(move_string)
+        (piece_type, color, row, col, letter, num) = game.parse_move(move_string)
         self.assertFalse(game.board.make_move(piece_type, color, row, col))
-        game.change_current_player()
 
     # performs a basic opening for two different boards, one manually and one via game board moves
     def classic_opening(self, game, comp_board):
