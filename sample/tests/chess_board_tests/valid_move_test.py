@@ -27,7 +27,7 @@ class TestValidMove(GameTest):
         self.execute_expected_valid_move(game, "c3")
         self.execute_expected_valid_move(game, "e5")
         self.execute_expected_valid_move(game, "qd8")
-        self.assertFalse(game.board.in_checkmate(constants.BLACK))
+        self.assertFalse(self.checkmate_checker(game, constants.BLACK))
 
 
 

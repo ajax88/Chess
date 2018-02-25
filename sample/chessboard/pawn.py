@@ -54,6 +54,6 @@ class Pawn(ChessPiece):
         for i in range(-2, 3):
             p_row = self.row + i
             if not i == 0 and not out_of_bounds(p_row, self.col):
-                if self.try_move(p_row, p_col):
-                    valid_moves.append((p_row, p_col))
+                if self.try_move(p_row, self.col):
+                    valid_moves.append((p_row, self.col))
         return valid_moves

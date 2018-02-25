@@ -58,11 +58,8 @@ class ChessBoard(Board):
             row, col = piece.get_position()
         super(ChessBoard, self).set_square(row, col, piece)
 
-    def get_white_pieces(self):
-        return self.white_pieces
-
-    def get_black_pieces(self):
-        return self.black_pieces
+    def get_pieces_of_color(self, color):
+        return self.white_pieces if color == constants.WHITE else self.black_pieces
 
     def is_flipped(self):
         return self.flip_board
@@ -207,27 +204,13 @@ class ChessBoard(Board):
                     return False
         return True
 
-    def in_checkmate(self, color):
-        in_check, pieces_threatening_check = self.in_check(color)
-        if not in_check:
-            return False
-        king = self.get_pieces(constants.KING, color)[0]
-        if not len(king.get_valid_moves()) == 0:
-            return False
-
-        if len(pieces_threatening_check) > 1:
-            return True
-        # if not, check if any pieces of can move in front of
-        attack_row, attack_col = pieces_threatening_check[0].row, pieces_threatening_check[0].col
-        blocking_squares = [(row, col) for row, col in generate_inbetween_squares(attack_row, attack_col, king.row, king.col)]
-        blocking_squares.remove((king.row, king.col))
-        protecting_pieces = self.white_pieces if color == constants.WHITE else self.black_pieces
-        for piece in protecting_pieces:
-            for square in blocking_squares:
-                if piece.try_move(square[0], square[1]):
-                    return False
-
-        return True
+    def game_over(self, color):
+        valid_moves = list(filter(lambda lst: len(lst) != 0,
+                           map(lambda piece: piece.get_valid_moves(), self.get_pieces_of_color(color))))
+        if len(valid_moves) == 0:
+            in_check, _ = self.in_check(color)
+            return True, constants.CHECKMATE_MESSAGE if self.in_check(color) else constants.STALEMATE_MESSAGE
+        return False, ""
 
 
 # generates all squares between (start_row, start_col) -> (end_row, end_col), inclusive

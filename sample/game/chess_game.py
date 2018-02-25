@@ -102,14 +102,12 @@ class ChessGame(object):
         game_over = False
         while (not game_over):
             os.system('clear')
-            is_white = self.current_player.get_color() == constants.WHITE
+            curr_color = self.current_player.get_color()
             print(self.board)
             print(self.current_player.get_name() + ", it's your turn. ")
             print("Your {} {} pieces are as follows:".format(
-                    len(self.board.get_white_pieces()) if is_white else len(self.board.get_black_pieces()),
-                    constants.WHITE if is_white else constants.BLACK))
-            print(list(map(lambda piece: piece.get_name(), self.board.get_white_pieces())) if is_white
-                  else list(map(lambda piece: piece.get_name(), self.board.get_black_pieces())))
+                    len(self.board.get_pieces_of_color(curr_color)), curr_color))
+            print(list(map(lambda piece: piece.get_name(), self.board.get_pieces_of_color(curr_color))))
 
             move_success = False
             move_string = input("Move: ")
@@ -131,10 +129,9 @@ class ChessGame(object):
                     continue
 
             self.change_current_player()
-            if self.board.in_checkmate(self.current_player.color):
-                game_over = True
+            game_over, end_game_message = self.board.game_over(self.current_player.color)
 
-        print("Game Over!!")
+        print("Game Over!! {}".format(end_game_message))
 
 
     def convert_to_row_col(self, letter_number):

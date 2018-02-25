@@ -44,3 +44,8 @@ class GameTest(unittest.TestCase):
         comp_board.set_square(None, 0, 5)
         comp_board.set_square(Bishop(comp_board, constants.BLACK, 4, 1))
 
+    def checkmate_checker(self, game, color):
+        game_over, message = game.board.game_over(color)
+        if game_over:
+            return message == constants.CHECKMATE_MESSAGE
+        return False

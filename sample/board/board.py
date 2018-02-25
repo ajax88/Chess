@@ -13,12 +13,12 @@ class Board(object):
 
     def get_square(self, row, col):
         if row >= self.row or row < 0 or col >= self.col or col < 0:
-            raise ValueError('Index out of bounds')
+            raise ValueError('Index out of bounds {}, {}'.format(row, col))
         return self.board[row][col]
 
     def set_square(self, row, col, c):
         if row >= self.row or row < 0 or col >= self.col or col < 0:
-            raise ValueError('Index out of bounds.')
+            raise ValueError('Index out of bounds {}, {}'.format(row, col))
 
         self.board[row][col] = c
 
