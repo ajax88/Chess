@@ -1,5 +1,6 @@
 import sample.helpers.constants
 from sample.chessboard.abstract_chess_piece import ChessPiece
+from sample.chessboard.abstract_chess_piece import out_of_bounds
 
 
 class Pawn(ChessPiece):
@@ -41,4 +42,18 @@ class Pawn(ChessPiece):
                 return True
         else:
             return False
-#TODO: Add in enpassant logic
+
+    def get_valid_moves(self):
+        valid_moves = []
+        for i in range(-1, 2, 2):
+            for j in range(-1, 2, 2):
+                p_row, p_col = self.row + i, self.col + j
+                if not out_of_bounds(p_row, p_col):
+                    if self.try_move(p_row, p_col):
+                        valid_moves.append((p_row, p_col))
+        for i in range(-2, 3):
+            p_row = self.row + i
+            if not i == 0 and not out_of_bounds(p_row, self.col):
+                if self.try_move(p_row, p_col):
+                    valid_moves.append((p_row, p_col))
+        return valid_moves

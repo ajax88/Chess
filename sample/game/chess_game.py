@@ -10,8 +10,8 @@ class ChessGame(object):
         self.flip_board = flip_board
         self.debug = debug
         self.board = ChessBoard(self.flip_board, self.debug)
-        self.player1 = ChessPlayer(constants.BLANK_CHAR, self.board, None)
-        self.player2 = ChessPlayer(constants.BLANK_CHAR, self.board, None)
+        self.player1 = ChessPlayer(constants.BLANK_CHAR, self.board, constants.WHITE)
+        self.player2 = ChessPlayer(constants.BLANK_CHAR, self.board, constants.BLACK)
         self.current_player = self.player1
         self.board_chars = constants.BOARD_CHARS[:]
         self.board_nums = constants.BOARD_NUMS[:]

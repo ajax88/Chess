@@ -22,7 +22,6 @@ class TestCheckMate(unittest.TestCase):
         self.assertFalse(game.board.in_checkmate(constants.BLACK))
         self.assertFalse(game.board.in_checkmate(constants.WHITE))
         execute_move(game, "qh5")
-        print(game.board)
         self.assertTrue(game.board.in_checkmate(constants.BLACK))
         self.assertFalse(game.board.in_checkmate(constants.WHITE))
 

@@ -212,7 +212,7 @@ class ChessBoard(Board):
         if not in_check:
             return False
         king = self.get_pieces(constants.KING, color)[0]
-        if not king.stuck():
+        if not len(king.get_valid_moves()) == 0:
             return False
 
         if len(pieces_threatening_check) > 1:

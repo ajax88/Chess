@@ -51,6 +51,9 @@ class ChessPiece():
     def has_moved(self):
         return self.has_moved
 
+    def is_current_position(self, to_row, to_col):
+        return self.row == to_row and self.col == to_col
+
     def change_board(self, to_row, to_col):
         self.board.set_square(sample.helpers.constants.BLANK, self.row, self.col)
         piece = self.board.get_square(to_row, to_col)
@@ -69,6 +72,7 @@ class ChessPiece():
             if in_check:
                 rollback()
                 raise ValueError(sample.helpers.constants.MOVE_KING_IN_CHECK)
+            self.has_moved = True
             return True
         return False
 
@@ -116,6 +120,11 @@ class ChessPiece():
             return True
         else:
             return False
+
+    @abstractmethod
+    def get_valid_moves(self):
+        pass
+
 
 
 def out_of_bounds(row, col):

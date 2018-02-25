@@ -21,6 +21,7 @@
 
 ##### P2
 * Replace user prompts with cla's
+* Pawn promotion!!!
 * Checkmate
 * Stalement
 * Castle (both sides)
